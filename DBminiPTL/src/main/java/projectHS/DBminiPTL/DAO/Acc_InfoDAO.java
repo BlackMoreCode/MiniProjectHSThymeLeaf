@@ -63,13 +63,16 @@ public class Acc_InfoDAO {
         }
 
         // 4: 조건들이 다 통과된다면 유저 아이디 기입.
+        String sql = "INSERT INTO ACC_INFO(USER_ID, USER_PW, USER_NAME, USER_PHONE, JOIN_DATE, AUTH_LV) VALUES (?, ?, ?, ?, SYSDATE, ?)";
+
         try {
-            Acc_InfoInsert(accInfoVO);
+            jdbcTemplate.update(sql, accInfoVO.getUserId(), accInfoVO.getUserPw(), accInfoVO.getUserName(), accInfoVO.getUserPhone(), 3); // Assuming AUTH_LV for new users is 3
             System.out.println("회원가입이 완료되었습니다."); // "Registration completed."
         } catch (Exception e) {
             System.out.println("회원가입에 실패했습니다: " + e.getMessage()); // "Registration failed"
         }
     }
+
 
     // 해당 유저 아이디가 이미 사용중인지 체크
     private boolean isUserIdTaken(String userId) {
