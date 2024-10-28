@@ -1,16 +1,16 @@
-package projectHS.DAO;
+package projectHS.DBminiPTL.DAO;
 
-import projectHS.Common.Common;
-import projectHS.Customer.SetMenu;
-import projectHS.Customer.SingleMenu;
+import projectHS.DBminiPTL.Common.Common;
+import projectHS.DBminiPTL.Customer.SetMenu;
+import projectHS.DBminiPTL.Customer.SingleMenu;
 import projectHS.VO.InvVO;
 
 
 import java.sql.*;
 import java.util.*;
 
-import static projectHS.DAO.Order_RecordDAO.orderRecordInsert;
-import static projectHS.DAO.StoreDAO.salesPTp;
+import static projectHS.DBminiPTL.DAO.Order_RecordDAO.orderRecordInsert;
+import static projectHS.DBminiPTL.DAO.StoreDAO.salesPTp;
 
 
 public class InvDAO {

@@ -1,7 +1,145 @@
-package projectHS.DAO;
+package projectHS.DBminiPTL.DAO;
 
-import projectHS.Common.Common;
-import projectHS.VO.Acc_InfoVO;
+import projectHS.DBminiPTL.VO.Acc_InfoVO;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+
+@Repository
+public class Acc_InfoDAO {
+    private final JdbcTemplate jdbcTemplate;
+    public Acc_InfoDAO(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    // ACC_INFO 테이블로서부터 자료를 받아서, userId/userPw를 확인한 뒤 사용자의 Auth_Lv를 확인하는 것이 목적인 메서드
+    public int checkUserAuthLevel(String userId, String userPw) {
+        String query = "SELECT AUTH_LV FROM ACC_INFO WHERE USER_ID = ? AND USER_PW = ?";
+        // jdbcTemplate.queryForObject 는 jdbcTemplate 클래스의 메서드로서 단일 객체만 존재하는 것을 확인하고 싶은 경우 사용
+        // syntax : queryForObject(String sql, Object[] args, Class<T> requiredType)
+        // new Object[]{userId, userPw}는 매개변수 배열로서 이를 이용해서 위의 "?" 인 Query placeholder랑 매칭.
+        // Class<T> requiredType => Integer.class => 우리는 여기서 auth_lv 이 interger 형이라고 예상함.
+        return jdbcTemplate.queryForObject(query, new Object[]{userId, userPw}, Integer.class);
+    }
+
+    public List<Acc_InfoVO> Acc_InfoSelect() {
+        String query = "SELECT * FROM ACC_INFO";
+        return jdbcTemplate.query(query, new AccInfoRowMapper());
+    }
+
+    // 점주 로그인시 storeID 확인하고 점주용 페이지에 들어가게 해주기.
+    public String adminStore(String userId) {
+        String sql = "SELECT STORE_ID FROM ACC_INFO WHERE USER_ID = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{userId}, String.class);
+    }
+
+    // 신규 유저 가입하고 DB에 입력처리해주는 메서드
+    // 기존 터미널 기반이랑 차이라면 기존 커맨드-라인 기반 어플에는 일일이 조건을 상세 명시해야하는 반면에...
+
+    public void Acc_InfoInsert(Acc_InfoVO accInfoVO) {
+        // 1: 유저 아이디가 중복인지 체크
+        if (isUserIdTaken(accInfoVO.getUserId())) {
+            System.out.println("이미 사용중인 아이디 입니다."); // "The ID is already in use."
+            return; // Stop the registration process
+        }
+
+        // 2: 연락처가 중복인지 체크
+        if (isPhoneNumberTaken(accInfoVO.getUserPhone())) {
+            System.out.println("이미 사용중인 연락처입니다."); // "The phone number is already in use."
+            return; // Stop the registration process
+        }
+
+        // 3: 비밀번호가 적합한지 체크
+        if (!isValidPassword(accInfoVO.getUserPw())) {
+            System.out.println("비밀번호는 영문자, 숫자, 특수기호의 조합으로 8자 이상 20자 이하로 입력해야 하며, '&'는 사용 불가입니다."); // "The password must be a combination of letters, numbers, and special characters, between 8 and 20 characters long, and cannot include '&'."
+            return; // Stop the registration process
+        }
+
+        // 4: 조건들이 다 통과된다면 유저 아이디 기입.
+        try {
+            Acc_InfoInsert(accInfoVO);
+            System.out.println("회원가입이 완료되었습니다."); // "Registration completed."
+        } catch (Exception e) {
+            System.out.println("회원가입에 실패했습니다: " + e.getMessage()); // "Registration failed"
+        }
+    }
+
+    // 해당 유저 아이디가 이미 사용중인지 체크
+    private boolean isUserIdTaken(String userId) {
+        String query = "SELECT COUNT(*) FROM ACC_INFO WHERE USER_ID = ?";
+        Integer count = jdbcTemplate.queryForObject(query, new Object[]{userId}, Integer.class);
+        return count != null && count > 0;
+    }
+
+    //해당 연락처가 사용중인지 체크
+    private boolean isPhoneNumberTaken(String userPhone) {
+        String query = "SELECT COUNT(*) FROM ACC_INFO WHERE USER_PHONE = ?";
+        Integer count = jdbcTemplate.queryForObject(query, new Object[]{userPhone}, Integer.class);
+        return count != null && count > 0;
+    }
+
+    // 비밀번호 적합성 조건들 구현 메서드
+    private boolean isValidPassword(String password) {
+        // 패스워드 적합성을 위해 정규식 사용
+        Pattern passPattern = Pattern.compile("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$");
+        Matcher passMatcher = passPattern.matcher(password);
+
+        // 해당 조건들에 비밀번호가 맞는지 확인
+        return password.length() >= 8
+                && password.length() <= 20
+                && !password.contains("&")
+                && passMatcher.find();
+    }
+
+    // RowMapper를 이용하여 원하는 형태의 결과값을 반환; SELECT로 나온 여러개의 값을 반환할 수 있을 뿐만 아니라,
+    // 사용자가 원하는 형태로도 얼마든지 받을 수 있다.
+    // 오버라이딩 => 이 경우 ResultSet에 값을 담아와서 rowNum 만큼 반복한다는 의미.
+    private static class AccInfoRowMapper implements RowMapper<Acc_InfoVO> {
+        @Override
+        public Acc_InfoVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return new Acc_InfoVO(
+                    rs.getString("USER_ID"),
+                    rs.getString("USER_PW"),
+                    rs.getString("USER_NAME"),
+                    rs.getString("USER_PHONE"),
+                    rs.getDate("JOIN_DATE"),
+                    rs.getInt("AUTH_LV")
+            );
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+package projectHS.DBminiPTL.DAO;
+
+import projectHS.DBminiPTL.Common.Common;
+import projectHS.DBminiPTL.VO.Acc_InfoVO;
+
+
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
+
+
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,7 +148,16 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Repository
 public class Acc_InfoDAO {
+*/
+/*    private final JdbcTemplate jdbcTemplate;
+
+    public Acc_InfoDAO(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }*//*
+
+
     static Connection conn = null;
     static Statement stmt = null;
     static PreparedStatement psmt = null;
@@ -39,7 +186,16 @@ public class Acc_InfoDAO {
         return authLevel;
     }
 
-    // 회원 정보 조회 (전체 조회; 중복 체크만을 위험이므로 유저권한 및 지점 정보를 제외하고 불러온다)
+
+*/
+/*    public static List<Acc_InfoVO> Acc_InfoSelect() {
+        String query = "SELECT * FROM ACC_INFO";
+        return jdbcTemplate.query(query, new AccInfoRowMapper());
+    }*//*
+
+
+
+     // 회원 정보 조회 (전체 조회; 중복 체크만을 위험이므로 유저권한 및 지점 정보를 제외하고 불러온다)
     public static List<Acc_InfoVO> Acc_InfoSelect() {
         List<Acc_InfoVO> accInfo = new ArrayList<>();
         try {
@@ -91,11 +247,17 @@ public class Acc_InfoDAO {
 
     // 회원 가입을 한다 = ACC_INFO 테이블에 추가한다 = INSERT 처리다?
     // 회원 가입을 위해서는 희망 아이디, 비밀번호, 연락처를 기입. 가입일시, 유저레벨(AUTH_LV)은 자동으로 부여. STORE_ID 역시 입력하지 않는다.
-    public static void Acc_InfoInsert() {
+    public static void Acc_InfoInsert(Acc_InfoVO accInfoVO) {
         // 회원정보 불러오기; Acc_InfoSelect 참조.
         List<Acc_InfoVO> accInfo = Acc_InfoSelect();
-        Scanner sc = new Scanner(System.in);
-        System.out.println("가입을 위해 회원 정보를 입력해주세요!");
+
+        int result = 0;
+
+*/
+/*        Scanner sc = new Scanner(System.in);
+        System.out.println("가입을 위해 회원 정보를 입력해주세요!");*//*
+
+
         // 회원 정보 입력 시작
         // 유저 아이디
         String userId;
@@ -162,6 +324,7 @@ public class Acc_InfoDAO {
         String sql = "INSERT INTO ACC_INFO(USER_ID, USER_PW, USER_NAME, USER_PHONE, JOIN_DATE, AUTH_LV) VALUES (?, ?, ?, ?, SYSDATE, ?)";
 
         try {
+//            result = jdbcTemplate.update(sql, vo.getUserId(), vo.getUserPw(), vo.getUserPhone(), vo.getJoinDate(), getAuthLv());
             conn = Common.getConnection();
             psmt = conn.prepareStatement(sql);
             psmt.setString(1, userId);
@@ -179,7 +342,27 @@ public class Acc_InfoDAO {
             Common.close(conn);
         }
         System.out.println("회원가입이 완료되었습니다. 메인메뉴로 이동합니다.");
+//        return result > 0;
     }
+
+
+
+*/
+/*    private static class AccInfoRowMapper implements RowMapper<Acc_InfoVO> {
+        @Override
+        public Acc_InfoVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return new Acc_InfoVO(
+                    rs.getString(userId),
+                    rs.getString(userPw),
+                    rs.getString(userName),
+                    rs.getString(userPhone),
+                    rs.getDate(joinDate),
+                    rs.getInt(authLv),
+                    rs.getString(storeId)
+            );
+        }
+    }*//*
+
 
 
     public static void accInfoSelectResult(List<Acc_InfoVO> list) {
@@ -198,4 +381,4 @@ public class Acc_InfoDAO {
         System.out.println("--------------------------------------------------------");
     }
 
-}
+}*/

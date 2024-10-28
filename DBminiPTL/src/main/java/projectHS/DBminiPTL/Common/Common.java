@@ -76,7 +76,7 @@ public class Common {
         }
     }
 
-    public class Util {
+    public static class Util {
         public boolean checkInputNumAndAlphabet(String userId) {
 
             char chrInput;

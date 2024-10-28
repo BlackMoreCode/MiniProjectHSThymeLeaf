@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>유저 생성</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body class="container">
+  <div>
+    <h1>신규 회원 등록</h1>
+    <form th:action="@{/acc_info/insert}" th:object="${accInfoVO}" method="post">
+      <div>
+        <label for="userId">유저 아이디:</label>
+        <input type="text" id="userId" th:field="*{userId}" /><br />
+      </div>
+      <div>
+        <label for="userPw">비밀번호:</label>
+        <input type="password" id="userPw" th:field="*{userPw}" /><br />
+      </div>
+      <div>
+        <label for="userName">이름:</label>
+        <input type="text" id="userName" th:field="*{userName}" /><br />
+      </div>
+      <div>
+        <label for="userPhone">연락처:</label>
+        <input type="text" id="userPhone" th:field="*{userPhone}" /><br />
+      </div>
+      <div>
+        <button type="submit">입력</button>
+      </div>
+    </form>
+  </div>
+</body>
+
+</html>

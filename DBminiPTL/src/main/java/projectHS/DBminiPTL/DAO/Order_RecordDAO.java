@@ -1,6 +1,6 @@
-package projectHS.DAO;
+package projectHS.DBminiPTL.DAO;
 
-import projectHS.Common.Common;
+import projectHS.DBminiPTL.Common.Common;
 import projectHS.VO.Order_RecordVO;
 
 import java.sql.*;

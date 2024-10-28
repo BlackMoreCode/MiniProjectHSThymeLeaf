@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>User List</title>
+</head>
+<body>
+<h1>User Information</h1>
+<table>
+  <tr>
+    <th>유저 ID</th>
+    <th>유저 이름</th>
+    <th>연락처</th>
+    <th>가입 일시</th>
+    <th>권한 레벨</th>
+  </tr>
+  <tr th:each="user : ${accInfoList}">
+    <td th:text="${user.userId}"></td>
+    <td th:text="${user.userName}"></td>
+    <td th:text="${user.userPhone}"></td>
+    <td th:text="${user.joinDate}"></td>
+    <td th:text="${user.authLv}"></td>
+  </tr>
+</table>
+</body>
+</html>

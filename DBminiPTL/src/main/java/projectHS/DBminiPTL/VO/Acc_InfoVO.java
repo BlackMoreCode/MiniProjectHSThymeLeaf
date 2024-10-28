@@ -1,7 +1,56 @@
-package projectHS.VO;
+package projectHS.DBminiPTL.VO;
+
+import lombok.*;
+import java.sql.Date;
+import java.time.LocalDate; // 필요시 LocalDate로 전환. ThymeLeaf 호환문제.
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+public class Acc_InfoVO {
+    private String userId;
+    private String userPw;
+    private String userName;
+    private String userPhone;
+    private Date joinDate; // 만약 필요시 Date를 LocalDate로 변경
+    private int authLv;
+    private String storeId;
+
+    public Acc_InfoVO(String userId, String userPw, String userName, String userPhone, Date joinDate, int authLv) {
+        this.userId = userId;
+        this.userPw = userPw;
+        this.userName = userName;
+        this.userPhone = userPhone;
+        this.joinDate = joinDate;
+        this.authLv = authLv;
+    }
+
+    // userPhone용 커스텀 Setter
+    public void setUserPhone(String userPhone) {
+        if (userPhone != null && userPhone.length() == 13) {
+            this.userPhone = userPhone;
+        } else {
+            throw new IllegalArgumentException("Contact number must be exactly 13 characters including '-'");
+        }
+    }
+
+}
+
+
+/*
+package projectHS.DBminiPTL.VO;
+
+import lombok.*;
 
 import java.sql.Date;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Acc_InfoVO {
     private String userId;
     private String userPw;
@@ -21,8 +70,6 @@ public class Acc_InfoVO {
         this.storeId = storeId;
     }
 
-    public Acc_InfoVO() {
-    }
 
     public Acc_InfoVO(String userId, String userName) {
         this.userId = userId;
@@ -97,4 +144,4 @@ public class Acc_InfoVO {
     public void setStoreId(String storeId) {
         this.storeId = storeId;
     }
-}
+}*/
