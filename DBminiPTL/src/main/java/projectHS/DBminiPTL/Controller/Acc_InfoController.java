@@ -1,61 +1,81 @@
 package projectHS.DBminiPTL.Controller;
 
-import org.springframework.jdbc.core.JdbcTemplate;
-import projectHS.DBminiPTL.DAO.Acc_InfoDAO;
-import projectHS.DBminiPTL.VO.Acc_InfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import projectHS.DBminiPTL.Common.Session;
+import projectHS.DBminiPTL.DAO.Acc_InfoDAO;
+import projectHS.DBminiPTL.VO.Acc_InfoVO;
 
 import java.util.List;
 
 @Controller
-@RequestMapping("/acc_info")
+@RequestMapping("/main")
 public class Acc_InfoController {
 
-    private final Acc_InfoDAO accInfoDAO;
+    @Autowired
+    private Acc_InfoDAO aiDAO;
 
-    public Acc_InfoController(Acc_InfoDAO accInfoDAO) {
-        this.accInfoDAO = accInfoDAO;
-    }
-    // 로그인 페이지 요청 처리
     @GetMapping
     public String loginView(Model model) {
         model.addAttribute("aiVO", new Acc_InfoVO());
         return "thymeleaf/login";
     }
 
-    // 로그인 처리
     @PostMapping("/login")
     public String login(@ModelAttribute("aiVO") Acc_InfoVO aiVO, Model model) {
 
         String userId = aiVO.getUserId();
         String userPw = aiVO.getUserPw();
 
-        int authLevel = accInfoDAO.checkUserAuthLevel(userId, userPw);
+        int authLevel = aiDAO.checkUserAuthLevel(userId, userPw);
 
         if (authLevel == 3) {
             // CUSTOMER 로그인 성공
+            Session.loggedInUserId = userId; // Set user ID in session
             model.addAttribute("message", "CUSTOMER 로그인 성공!");
-            return "thymeleaf/customer/customerMain"; // 고객 메인 페이지로 리디렉션
+            return "redirect:/main/customer"; // Redirect to customer main page
         } else if (authLevel == 1) {
             // ADMIN 로그인 성공
+            Session.loggedInUserId = userId; // Set user ID in session
             model.addAttribute("message", "ADMIN 로그인 성공!");
-            return "thymeleaf/admin/adminMain"; // 관리자 메인 페이지로 리디렉션
+            return "redirect:/main/admin"; // Redirect to the admin main page
         } else if (authLevel == 2) {
             // HQ 로그인 성공
+            Session.loggedInUserId = userId; // Set user ID in session
             model.addAttribute("message", "HQ 로그인 성공!");
-            return "thymeleaf/hq/hqMain"; // HQ 메인 페이지로 리디렉션
+            return "redirect:/main/hq"; // Redirect to the HQ main page
         } else {
             // 로그인 실패
             model.addAttribute("error", "아이디 또는 비밀번호를 확인해주세요.");
-            return "thymeleaf/login"; // 로그인 페이지로 돌아감
+            return "thymeleaf/login"; // Return to the login page with an error message
         }
     }
 
+    @GetMapping("/customer")
+    public String rdCustomerMain(Model model) {
+        // 고객 메인 페이지에 필요한 데이터 추가
+        return "thymeleaf/customerMain"; // 고객 메인 페이지 템플릿
+    }
+
+    @GetMapping("/admin")
+    public String rdAdminMain(Model model) {
+        // 관리자 메인 페이지에 필요한 데이터 추가
+        return "thymeleaf/adminMain"; // 관리자 메인 페이지 템플릿
+    }
+
+    @GetMapping("/hq")
+    public String rdHqMain(Model model) {
+        // HQ 메인 페이지에 필요한 데이터 추가
+        return "thymeleaf/hqMain"; // HQ 메인 페이지 템플릿
+    }
+
     // 회원가입 페이지 요청 처리
-    @GetMapping("/thymeleaf/signup")
+    @GetMapping("/signup")
     public String signupView(Model model) {
         model.addAttribute("accountInfo", new Acc_InfoVO());
         return "thymeleaf/signup";
@@ -63,17 +83,16 @@ public class Acc_InfoController {
 
     // 회원가입 처리 메소드
     @PostMapping("/signup")
-    public String signup(@ModelAttribute Acc_InfoVO aiVO) {
-
-        // 회원가입 메소드 호출
-        accInfoDAO.Acc_InfoInsert(aiVO);
-        return "thymeleaf/signupSuccess";
+    public String signup(@ModelAttribute Acc_InfoVO aiVO, Model model) {
+        boolean isSuccess = aiDAO.Acc_InfoInsert(aiVO);
+        model.addAttribute("isSuccess", isSuccess);
+        return "thymeleaf/signupRst";
     }
 
     // 모든 회원 목록 조회
     @GetMapping("/select")
     public String selectAccInfo(Model model) {
-        List<Acc_InfoVO> aiList = accInfoDAO.Acc_InfoSelect();
+        List<Acc_InfoVO> aiList = aiDAO.Acc_InfoSelect();
         model.addAttribute("accountInfo", aiList);
         return "thymeleaf/aiSelect";
     }
@@ -96,84 +115,4 @@ public class Acc_InfoController {
         return "thymeleaf/hqMain";
     }
 
-
-
-
-
-    @GetMapping("/select2")
-    public String selectAccInfo2(Model model) {
-        List<Acc_InfoVO> accInfoList = accInfoDAO.Acc_InfoSelect();
-        model.addAttribute("accInfoList", accInfoList);
-        return "thymeleaf/accInfoSelect";
-    }
-
-    @GetMapping("/insert")
-    public String insertViewAccInfo(Model model) {
-        model.addAttribute("accInfoVO", new Acc_InfoVO());
-        return "thymeleaf/accInfoInsert";
-    }
-
-    @PostMapping("/insert")
-    public String insertDBAccInfo(@ModelAttribute("accInfoVO") Acc_InfoVO accInfoVO) {
-        accInfoDAO.Acc_InfoInsert(accInfoVO);
-        return "thymeleaf/signupSuccess";
-    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-package projectHS.DBminiPTL.Controller;
-
-import projectHS.DBminiPTL.DAO.Acc_InfoDAO;
-import projectHS.DBminiPTL.VO.Acc_InfoVO;
-
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
-
-@Controller
-@RequestMapping("/acc_info")
-public class Acc_InfoController {
-
-
-    @GetMapping("/select")
-    public String selectAccInfo(Model model) {
-        List<Acc_InfoVO> acivo = Acc_InfoDAO.Acc_InfoSelect();
-        model.addAttribute("userId", acivo);
-        return "thymeleaf/accInfoSelect";
-    }
-
-
-    @GetMapping("/insert")
-    public String insertViewAccInfo(Model model){
-        model.addAttribute("userId", new Acc_InfoVO());
-        return "thymeleaf/accInfoInsert";
-    }
-
-    @PostMapping("/insert")
-    public String insertDBAccInfo(@ModelAttribute("userId") Acc_InfoVO accInfoVO) {
-        Acc_InfoDAO.Acc_InfoInsert(accInfoVO);
-        return "thymeleaf/accInfoResult";
-    }
-
-}
-
-
-*/

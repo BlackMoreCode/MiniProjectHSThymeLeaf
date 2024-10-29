@@ -1,32 +1,43 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http:/www.thymeleaf.org" lang="en">
+
 <head>
   <title>회원정보 수정 결과</title>
   <meta charset="UTF-8">
   <style>
     .success {
-        color: green;
-        font-weight: bold;
+      color: green;
+      font-weight: bold;
     }
+
     .failure {
-        color: red;
-        font-weight: bold;
+      color: red;
+      font-weight: bold;
     }
   </style>
 </head>
+
 <body>
-<h1>회원정보 수정 결과</h1>
+  <h1>CUSTOMER SIGNUP RESULT</h1>
+  <div>
+    <h2>버거집입니다🍔</h2>
+    <p>안녕하세요, 고객님!</p>
+    <p>버거집 회원 정보 수정을 위한 페이지입니다.</p>
+  </div>
+<h1>회원 정보 갱신 결과</h1>
 
-<!-- Success Message -->
-<div th:if="${isSuccess}" class="success">
-  사원 추가 성공
-</div>
+    <!-- Success Message -->
+    <div th:if="${isSuccess}" class="success">
+        회원정보 수정 성공
+    </div>
 
-<!-- Failure Message -->
-<div th:if="${!isSuccess}" class="failure">
-  사원 추가 실패
-</div>
+    <!-- Failure Message -->
+    <div th:if="${isSuccess == false}" class="failure">
+        회원정보 수정 실패: <span th:text="${error}"></span>
+    </div>
 
-<a href="/emp/select">사원 조회 화면으로 이동</a>
+    <a href="/customer/myPage">마이페이지로 돌아가기</a>
+    <input type="button" value="재작성 하기" onclick="history.go(-1);" />
 </body>
+
 </html>

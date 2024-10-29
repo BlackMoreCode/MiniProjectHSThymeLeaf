@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>회원정보 삭제 결과</title>
+  <style>
+    .success {
+      color: green;
+      font-weight: bold;
+    }
+
+    .failure {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>회원 정보 삭제 결과</h1>
+
+  <!-- Success Message -->
+  <div th:if="${isSuccess}" class="success">
+    <p>회원 삭제 성공</p>
+    <a href="/main">Return to Main</a>
+  </div>
+
+  <!-- Failure Message -->
+  <div th:if="${!isSuccess}" class="failure">
+    <p>회원 삭제 실패</p>
+    <p th:text="${errorMessage}"></p> <!-- Display the specific error message -->
+    <a href="/main">Return to Main</a>
+  </div>
+
+  <a href="/customer/myPage">마이페이지로 돌아가기</a>
+  <input type="button" value="재작성 하기" onclick="history.go(-1);" />
+</body>
+
+</html>

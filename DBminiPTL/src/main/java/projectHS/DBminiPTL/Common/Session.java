@@ -1,4 +1,4 @@
-package projectHS.Common;
+package projectHS.DBminiPTL.Common;
 
 public class Session {
     public static String loggedInUserId = null; // For normal customers

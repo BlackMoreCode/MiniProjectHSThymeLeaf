@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http:/www.thymeleaf.org" lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>회원 삭제</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+  <h1>회원 삭제</h1>
+  <form action="/customer/myPage/accInfoDelete" method="post">
+    <p>정말로 계정을 삭제하시겠습니까? 이는 되돌릴 수 없습니다.</p>
+    <input type="hidden" name="userId" th:value="${accInfoVO.userId}" />
+    <input type="submit" value="계정 삭제" />
+  </form>
+
+  <button onclick="location.href='/main'">취소</button>
+</body>
+
+</html>
