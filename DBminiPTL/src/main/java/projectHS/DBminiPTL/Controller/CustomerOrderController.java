@@ -161,7 +161,7 @@ public class CustomerOrderController {
             String orderList = invDAO.orderToString();
             int price = invDAO.getTotalPrice();
             //orderRecordInsert(Session.storeId, invDAO.orderToString(), invDAO.getTotalPrice(), Session.loggedInUserId);
-            orderRecordDAO.orderRecordInsert(Session.storeId, orderList, price, "green");
+            orderRecordDAO.orderRecordInsert(Session.storeId, orderList, price, Session.loggedInUserId);
 
 
             model.addAttribute("orderPrice", price);
@@ -174,7 +174,7 @@ public class CustomerOrderController {
             return "redirect:/main/customer/showMenu";
         }
 
-        return "redirect:/main/customer/stores"; // 가게 선택 페이지로 리다이렉트
+        return "redirect:/main/customer"; // 주문 성공 이후 기존 회원 페이지로
     }
 
 

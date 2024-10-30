@@ -28,7 +28,6 @@ public class StoreOrderController {
 
     @GetMapping("/storeStat")
     public String storeStat(Model model) {
-        Session.storeId = "시청점";
 
         List<InvVO> stockCheck = invDAO.stockCheck(Session.storeId);
         List<InvVO> products = invDAO.productHQ();

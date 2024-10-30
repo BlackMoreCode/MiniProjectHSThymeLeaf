@@ -42,6 +42,7 @@ public class Acc_InfoController {
         } else if (authLevel == 1) {
             // ADMIN 로그인 성공
             Session.loggedInUserId = userId; // Set user ID in session
+            System.out.println(Session.loggedInUserId);
             model.addAttribute("message", "ADMIN 로그인 성공!");
             return "redirect:/main/admin"; // Redirect to the admin main page
         } else if (authLevel == 2) {

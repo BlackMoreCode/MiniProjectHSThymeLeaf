@@ -191,6 +191,16 @@ public class InvDAO {
         }
     }
 
+    public static class cusStockMapper implements RowMapper<InvVO> {
+        @Override
+        public InvVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return new InvVO(
+                    rs.getString("MENU_NAME"),
+                    rs.getInt("STOCK")
+            );
+        }
+    }
+
 
     // 고객의 결제 시 재고 체크
     public String customerStockCheck(String storeId) {
@@ -199,7 +209,7 @@ public class InvDAO {
         List<InvVO> cart = stockList(); // 장바구니의 내용
 
         try {
-            stock = jdbcTemplate.query(sql, new Object[]{storeId}, new stockMapper());
+            stock = jdbcTemplate.query(sql, new Object[]{storeId}, new cusStockMapper());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -431,7 +441,7 @@ public class InvDAO {
     }
 
     @Transactional
-    public void storeCartClear(){
+    public void storeCartClear() {
         storeCart.clear();
     }
 

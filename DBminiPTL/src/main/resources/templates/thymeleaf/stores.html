@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>가게 선택</title>
+</head>
+
+<body>
+  <h1>가게 선택</h1>
+
+  <form th:action="@{/main/customer/stores}" method="post">
+    <div>
+      <span th:each="store : ${stores}">
+        <button type="submit" name="storeId" th:value="${store}" style="font-size: 20px; margin: 10px;">
+          <span th:text="${store}"></span>
+        </button>
+      </span>
+    </div>
+  </form>
+
+</body>
+
+</html>
