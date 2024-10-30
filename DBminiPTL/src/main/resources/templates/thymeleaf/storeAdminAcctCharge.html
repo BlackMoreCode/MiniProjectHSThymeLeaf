@@ -82,7 +82,7 @@
 <body>
   <h1>계좌 송금</h1>
   <div class="form-container">
-    <form th:action="@{/main/admin/account/cpCharge}" th:object="${capitalSc}" method="post">
+    <form th:action="@{/main/admin/account/cpCharge}" th:object="${capitalCg}" method="post">
       <div class="form-group">
         <label for="amount">송금 금액:</label>
         <input type="number" id="amount" th:field="*{amount}" required placeholder="금액을 입력하세요" step="any" min="0"
