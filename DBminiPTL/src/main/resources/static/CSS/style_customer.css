@@ -13,6 +13,7 @@ a {
   text-decoration: none;
   color: black;
 }
+
 body {
   background-color: #f1f1f1;
 }
@@ -88,7 +89,7 @@ body {
   margin: 10px 0 20px;
 }
 
-.submit > input {
+.submit>input {
   width: 100%;
   height: 60px;
   color: #ffffff;
@@ -100,7 +101,7 @@ body {
   font-weight: bold;
 }
 
-.submit > button {
+.submit>button {
   width: 100%;
   height: 60px;
   color: #ffffff;
@@ -112,7 +113,7 @@ body {
   font-weight: bold;
 }
 
-#input_box > #sub_menu {
+#input_box>#sub_menu {
   margin: 36px 0;
   display: block;
   height: 22px;
@@ -123,7 +124,7 @@ body {
   text-align: center;
 }
 
-#sub_menu > li > a {
+#sub_menu>li>a {
   color: #aaa;
   font-size: 14px;
 }
@@ -219,11 +220,13 @@ body {
   border: 1px solid #ddd;
   border-radius: 8px;
   margin-bottom: 20px;
-  border-bottom: 1px solid #ddd; /* 나누는 선 추가 */
+  border-bottom: 1px solid #ddd;
+  /* 나누는 선 추가 */
 }
 
 .receipt-card:last-child {
-  border-bottom: none; /* Remove divider from the last item */
+  border-bottom: none;
+  /* Remove divider from the last item */
 }
 
 .receipt-card h3 {
@@ -236,4 +239,59 @@ body {
   margin: 5px 0;
   color: #555;
   font-size: 14px;
+}
+
+/* 고객 주문 선 분리 */
+.separator {
+  border-top: 2px solid #ccc;
+  margin: 20px 0;
+}
+
+
+/* 고객주문 테스트  */
+body {
+  display: flex;
+  justify-content: space-between;
+}
+
+.menu,
+.cart {
+  align-items: center;
+  width: 45%;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.separator {
+  height: 1px;
+  background-color: #ccc;
+  margin: 20px 0; /* Adjust margin as needed */
+}
+
+h2, h3 {
+  color: #333; /* Adjust heading color as needed */
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }

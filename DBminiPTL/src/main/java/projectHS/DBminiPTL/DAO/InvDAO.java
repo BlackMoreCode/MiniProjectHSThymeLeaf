@@ -365,6 +365,7 @@ public class InvDAO {
 
     // 매장의 재고 업데이트
     public void updateInventory(String storeId) {
+
         String sql = "UPDATE INV SET STOCK = STOCK + ? WHERE MENU_NAME = ? AND STORE_ID = ?";
 
         jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
@@ -381,6 +382,43 @@ public class InvDAO {
                 return storeCart.size();
             }
         });
+    }
+
+    public List<String> isMenuExist(String storeId) {
+        String sql = "SELECT MENU_NAME FROM INV WHERE STORE_ID = ?";
+        try {
+            return jdbcTemplate.query(sql, new Object[]{storeId}, new RowMapper<String>() {
+                @Override
+                public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    return rs.getString("menu_name"); // 원하는 컬럼 이름으로 수정
+                }
+            });
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    public void addInventory(String storeId, List<SingleMenu> newMenu) {
+        String sql = "INSERT INTO INV VALUES (?,?,?,?)";
+
+        jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement ps, int i) throws SQLException {
+                SingleMenu menu = newMenu.get(i);
+                ps.setString(1, menu.getName());
+                ps.setString(2, storeId);
+                ps.setInt(3, menu.getPrice());
+                ps.setInt(4, menu.getCount());
+
+            }
+
+            @Override
+            public int getBatchSize() {
+                return newMenu.size();
+            }
+        });
+
     }
 
     // 해당 지점의 가용금 감소

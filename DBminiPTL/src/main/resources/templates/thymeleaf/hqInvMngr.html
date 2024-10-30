@@ -1,104 +1,144 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
-  <title>HQ INVENTORY MANAGER</title>
+  <title>BURGERZIP HQ INVENTORY MANAGER</title>
+  <link rel="stylesheet" th:href="@{/css/style_hq.css}">
 </head>
+
 <body>
-<h1>HQ INVENTORY MANAGER</h1>
-<div>
-  <h2>버거집입니다🍔</h2>
-  <p>안녕하세요, 본사 담당자님!</p>
-  <p>발주 가능 메뉴 관리 페이지입니다.</p>
-</div>
 
-<br><br>
+  <div id="wrap_hq_InvMngr">
+    <div id="area">
+      <div id="header">
+        <img
+          src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F64Fyi%2FbtsKopBV7f8%2FV9c159yoKN4R6s0C6HV2i0%2Fimg.png"
+          width="100" />
+        <br>
+        <h3>버거집 HQ INVENTORY MANAGER🍔</h3>
+        <p>안녕하세요 본사 담당자님,</p>
+        <p>발주 가능 메뉴 관리 페이지입니다.</p><br>
+      </div><br><br><br>
 
-<input type="button" value="메뉴추가" onclick="document.getElementById('addMenuForm').style.display='block'; this.style.display='none';" />
+      <br><br>
+      <div id="table_area">
+        <table>
+          <thead>
+            <tr>
+              <th>메뉴명</th>
+              <th>카테고리</th>
+              <th>발주가격</th>
+              <th>메뉴설명</th>
+              <th>수정</th>
+              <th>삭제</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="hq : ${invMenuList}">
+              <td th:text="${hq.menuName}"></td>
+              <td th:text="${hq.category}"></td>
+              <td th:text="${hq.price}"></td>
+              <td th:text="${hq.descr}"></td>
+              <td>
 
-<!-- 메뉴 추가 폼 -->
-<div id="addMenuForm" style="display: none;">
-  <h3>메뉴 추가</h3>
-  <form th:action="@{/main/hq/hqInvMngr/addMode}" method="post">
-    <label>메뉴명</label>
-    <input type="text" name="menuName" required /><br>
-    <label>카테고리</label>
-    <select name="category">
-      <option value="">카테고리 선택-</option>
-      <option value="버거">버거</option>
-      <option value="사이드">사이드</option>
-      <option value="음료">음료</option>
-    </select><br>
-    <label>발주가격:</label>
-    <input type="number" name="price" required /><br>
-    <label>메뉴설명:</label>
-    <input type="text" name="descr" /><br>
+                <!-- 수정 버튼 -->
+                <form th:action="@{/main/hq/hqInvMngr/editMode}" method="post" style="display: inline;"
+                  th:if="${!hq.editMode}" class="sub_button2">
+                  <input type="hidden" name="menuName" th:value="${hq.menuName}" />
+                  <input type="button" value="수정" onclick="this.closest('form').submit();" />
+                </form>
 
-    <button type="submit">메뉴추가</button>
-    <input type="button" value="추가취소" onclick="document.getElementById('addMenuForm').style.display='none'; document.querySelector('input[value=메뉴추가]').style.display='block';" /><br><br><br>
-  </form>
-</div>
+                <!-- 수정 폼 -->
 
-<br><br>
-<table>
-  <thead>
-  <tr>
-    <th>메뉴명</th>
-    <th>카테고리</th>
-    <th>발주가격</th>
-    <th>메뉴설명</th>
-    <th>옵션</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="hq : ${invMenuList}">
-    <td th:text="${hq.menuName}"></td>
-    <td th:text="${hq.category}"></td>
-    <td th:text="${hq.price}"></td>
-    <td th:text="${hq.descr}"></td>
-    <td>
-
-      <!-- 수정 버튼 -->
-      <form th:action="@{/main/hq/hqInvMngr/editMode}" method="post" style="display: inline;" th:if="${!hq.editMode}">
-        <input type="hidden" name="menuName" th:value="${hq.menuName}" />
-        <button type="submit">수정</button>
-      </form>
-
-      <!-- 수정 폼 -->
-      <form th:action="@{/main/hq/hqInvMngr/update}" method="post" style="display: inline;" th:if="${hq.editMode}">
-        <input type="hidden" name="menuName" th:value="${hq.menuName}" />
-        <select name="category" id="category" th:value="${hq.category}">
-          <option value="">수정할 카테고리 선택-</option>
-          <option value="버거">버거</option>
-          <option value="사이드">사이드</option>
-          <option value="음료">음료</option>
-        </select><br>
-        <input type="number" name="price" placeholder="수정할 발주가격" th:value="${hq.price}" /><br>
-        <input type="text" name="descr" placeholder="수정할 메뉴설명" th:value="${hq.descr}" />
-        <br><button type="submit">저장</button>
-        <input type="button" value="수정취소" onclick="history.back();" />
-      </form>
-
-      <!-- 삭제 폼 -->
-      <form th:action="@{/main/hq/hqInvMngr/delete}" method="post" style="display: inline;">
-        <input type="hidden" name="menuName" th:value="${hq.menuName}" />
-        <button type="button" onclick="if(confirm('정말로 삭제하시겠습니까?')) { this.closest('form').submit(); }">삭제</button>
-      </form>
-
-    </td>
-
-  </tr>
-  <tr th:if="${#lists.isEmpty(invMenuList)}">
-    <td colspan="4">현재 발주 가능한 메뉴가 없습니다.</td>
-  </tr>
-  </tbody>
-</table>
-<br>
+                <form th:action="@{/main/hq/hqInvMngr/update}" method="post" style="display: inline;"
+                  th:if="${hq.editMode}">
+                  <div id="input_box_hq_InvMngr_Edit" style="display: inline;">
+                    <input type="hidden" name="menuName" th:value="${hq.menuName}" />
+                    <select name="category" id="category" th:value="${hq.category}" class="input">
+                      <option value="">수정할 카테고리</option>
+                      <option value="버거">버거</option>
+                      <option value="사이드">사이드</option>
+                      <option value="음료">음료</option>
+                    </select><br>
+                    <input class="input" type="number" name="price" placeholder="수정할 발주가격" /><br>
+                    <input class="input" type="text" name="descr" placeholder="수정할 메뉴설명" />
+                    <br>
 
 
-  <input type="button" value="새로고침" onclick="window.location.reload()" />
-  <input type="button" value="뒤로가기" onclick="history.back();" />
-</div>
+                    <span class="sub_button3">
+                      <input type="submit" value="수정저장" />
+
+                      <span class="sub_button3">
+                        <input type="button" value="수정취소" onclick="history.back();" />
+                      </span></span>
+
+                  </div>
+                </form>
+
+              </td>
+
+              <td>
+                <!-- 삭제 폼 -->
+                <form th:action="@{/main/hq/hqInvMngr/delete}" method="post" style="display: inline;"
+                  class="sub_button2">
+                  <input type="hidden" name="menuName" th:value="${hq.menuName}" />
+                  <input type="button" value="삭제"
+                    onclick="if(confirm('정말로 삭제하시겠습니까?')) { this.closest('form').submit(); }" />
+                </form>
+              </td>
+
+            </tr>
+            <tr th:if="${#lists.isEmpty(invMenuList)}">
+              <td colspan="4">현재 발주 가능한 메뉴가 없습니다.</td>
+            </tr>
+          </tbody>
+        </table>
+        <br>
+      </div>
+
+      <span class="submit">
+        <input type="button" value="메뉴추가"
+          onclick="document.getElementById('input_box_hq_InvMngr').style.display='block';" />
+      </span>
+
+      <!-- 메뉴 추가 폼 -->
+      <div id="input_box_hq_InvMngr" style="display: none;">
+        <form th:action="@{/main/hq/hqInvMngr/addMode}" method="post">
+          <input class="input" type="text" name="menuName" placeholder="추가하실 메뉴의 이름을 입력하세요." required /><br>
+
+          <select class="input" name="category" required>
+            <option value="">카테고리 선택-</option>
+            <option value="버거">버거</option>
+            <option value="사이드">사이드</option>
+            <option value="음료">음료</option>
+          </select><br>
+
+          <input class="input" type="number" name="price" placeholder="추가하실 메뉴의 가격을 입력하세요." required /><br>
+
+          <input class="input" type="text" name="descr" placeholder="추가하실 메뉴의 설명을 입력하세요." /><br>
+
+          <span class="sub_button">
+            <input type="submit" value="추가하기"
+              onclick="if(confirm('새로운 메뉴를 추가합니다.')) { this.closest('form').submit(); }">
+            <span class="sub_button">
+              <input type="button" value="추가취소"
+                onclick="document.getElementById('input_box_hq_main').style.display='none'; this.closest('.submit').style.display='block';" />
+            </span></span><br><br>
+        </form>
+
+
+
+      </div>
+
+      <span class="submit"><input type="button" value="뒤로가기" onclick="history.back();" /></span>
+      <br><br><br>
+
+    </div>
+
+  </div>
+
 
 </body>
+
 </html>

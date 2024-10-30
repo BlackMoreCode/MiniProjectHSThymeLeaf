@@ -4,21 +4,23 @@
 <head>
   <meta charset="UTF-8">
   <title>가게 선택</title>
+  <link rel="stylesheet" href="/css/style_customer.css">
 </head>
 
 <body>
-  <h1>가게 선택</h1>
+  <div id="wrap_main">
+    <h1>가게 선택</h1>
 
-  <form th:action="@{/main/customer/stores}" method="post">
-    <div>
-      <span th:each="store : ${stores}">
-        <button type="submit" name="storeId" th:value="${store}" style="font-size: 20px; margin: 10px;">
-          <span th:text="${store}"></span>
-        </button>
-      </span>
-    </div>
-  </form>
-
+    <form th:action="@{/main/customer/stores}" method="post">
+      <div class="store-buttons">
+        <span th:each="store : ${stores}">
+          <button type="submit" name="storeId" th:value="${store}" class="store-button">
+            <span th:text="${store}"></span>
+          </button>
+        </span>
+      </div>
+    </form>
+  </div>
 </body>
 
 </html>

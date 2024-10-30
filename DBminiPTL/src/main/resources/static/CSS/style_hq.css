@@ -26,16 +26,21 @@ body {
 #wrap_hq_InvMngr {
   width: 800px;
   min-width: 400px;
-  height: 500px;
-  margin: 100px auto auto;
+  height: 1000px;
+  margin: 100px auto 100px;
   background-color: #ffffff;
 }
 
 #area {
   width: 800px;
   background-color: #ffffff;
-  margin: 0 auto;
+  margin: 0 auto 100px;
   position: relative;
+}
+
+#table_area {
+  display: flex; /* Flexbox 사용 */
+  justify-content: center; /* 수평 중앙 정렬 */
 }
 
 #header {
@@ -46,15 +51,48 @@ body {
 }
 
 #input_box_hq_main {
-  width: 100%;
+  width: 80%;
   margin: auto;
-  padding: 100px 0 0;
+  padding: 50px 0 0;
+  text-align: center;
 }
 
 #input_box_hq_main .input {
-  width: 100%;
+  width: 80%;
   height: 50px;
   padding: 15px 10px 14px;
+  box-sizing: border-box;
+  border: 1px solid #cccccc;
+  margin-bottom: 10px;
+}
+
+#input_box_hq_InvMngr {
+  width: 80%;
+  margin: auto;
+  padding: 50px 0 0;
+  text-align: center;
+}
+
+#input_box_hq_InvMngr .input {
+  width: 80%;
+  height: 50px;
+  padding: 15px 10px 14px;
+  box-sizing: border-box;
+  border: 1px solid #cccccc;
+  margin-bottom: 10px;
+}
+
+#input_box_hq_InvMngr_Edit {
+  width: 90%;
+  margin: auto;
+  padding: 5px 0 0;
+  text-align: center;
+}
+
+#input_box_hq_InvMngr_Edit .input {
+  width: 80%;
+  height: 30px;
+  padding: 5px 5px 5px;
   box-sizing: border-box;
   border: 1px solid #cccccc;
   margin-bottom: 10px;
@@ -74,7 +112,7 @@ body {
 }
 
 .submit > input {
-  width: 50%;
+  width: 80%;
   height: 60px;
   color: #ffffff;
   background: #000000;
@@ -85,8 +123,59 @@ body {
   font-weight: bold;
 }
 
+.sub_button {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+
+.sub_button > input {
+  width: 70px;
+  height: 30px;
+  color: #000000;
+  background: #ffffff;
+  text-align: center;
+  border: 1px solid #000;
+  display: block;
+  font-size: 12px;
+  margin: 5px;
+}
+
+.sub_button2 {
+  display: inline-block;
+  margin: 0 auto;
+}
+
+.sub_button2 > input {
+  width: 50px;
+  height: 30px;
+  color: #000000;
+  background: #ffffff;
+  text-align: center;
+  border: 1px solid #000;
+  display: inline;
+  font-size: 12px;
+  margin: 0 5px;
+}
+
+.sub_button3 {
+  display: inline-block;
+  margin: 0 auto;
+}
+
+.sub_button3 > input {
+  width: 66px;
+  height: 30px;
+  color: #ffffff;
+  background: #000000;
+  border: 1px solid #000;
+  text-align: center;
+  display: inline;
+  font-size: 12px;
+  margin: 0 5px;
+}
+
 #input_box > #sub_menu {
-  margin: 36px 0;
   display: block;
   height: 22px;
 }
@@ -104,4 +193,28 @@ body {
 .description {
   color: #aaa;
   font-size: 12px;
+}
+
+table {
+    width: 80%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 12px;
+}
+
+th {
+    background-color: #f2f2f2;
+    color: black;
+}
+
+td .sub_button2 {
+    display: flex;
+    justify-content: center; /* 버튼 가로 중앙 정렬 */
 }

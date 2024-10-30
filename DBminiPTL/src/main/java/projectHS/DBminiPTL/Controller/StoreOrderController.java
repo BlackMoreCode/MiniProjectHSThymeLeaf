@@ -13,6 +13,7 @@ import projectHS.DBminiPTL.Customer.SingleMenu;
 import projectHS.DBminiPTL.DAO.InvDAO;
 import projectHS.DBminiPTL.VO.InvVO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,6 +31,7 @@ public class StoreOrderController {
     public String storeStat(Model model) {
 
         List<InvVO> stockCheck = invDAO.stockCheck(Session.storeId);
+        System.out.println(Session.storeId);
         List<InvVO> products = invDAO.productHQ();
         List<SingleMenu> cart = invDAO.getStoreCart();
 
@@ -86,12 +88,31 @@ public class StoreOrderController {
         int capital = invDAO.capitalCheck(Session.storeId);
         int totalPrice = invDAO.getTotalPriceStore();
 
+        List<InvVO> stockCheck = invDAO.stockCheck(Session.storeId);
+
+        List<String> existMenu = invDAO.isMenuExist(Session.storeId);
+        List<SingleMenu> newThing = new ArrayList<>();
+
+        for(SingleMenu e:invDAO.getStoreCart()){
+            for(String s:existMenu){
+                if(e.getName().equals(s)){
+                    newThing.add(e);
+                    invDAO.getStoreCart().remove(e);
+                    break;
+                }
+            }
+        }
+
+
         if (capital < totalPrice) {
             redirectAttributes.addFlashAttribute("overCapital", capital + "원 이하로 주문 해 주세요");
             return "redirect:/main/admin/storeStat";
         }
 
         try {
+            if(!newThing.isEmpty()){
+                invDAO.addInventory(Session.storeId, newThing);
+            }
             // 재고 업데이트 및 자본금 감소
             invDAO.updateInventory(Session.storeId);
             invDAO.updateCapital(Session.storeId, totalPrice);
