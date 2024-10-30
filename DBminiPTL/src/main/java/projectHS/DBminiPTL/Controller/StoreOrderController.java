@@ -17,7 +17,7 @@ import java.util.List;
 
 
 @Controller
-@RequestMapping("/main/customer")
+@RequestMapping("/main/admin")
 public class StoreOrderController {
     private final InvDAO invDAO;
 
@@ -63,21 +63,21 @@ public class StoreOrderController {
 
         invDAO.addStoreCart(singleMenu);
 
-        return "redirect:/main/customer/storeStat";
+        return "redirect:/main/admin/storeStat";
     }
 
     @PostMapping("/cartUpdate")
     public String updateCart(@RequestParam String menuName, @RequestParam int newCount) {
         invDAO.updateStoreCart(menuName, newCount);
 
-        return "redirect:/main/customer/storeStat";
+        return "redirect:/main/admin/storeStat";
     }
 
     @PostMapping("/cartRemove")
     public String removeSingleCart(@RequestParam String menuName) {
         invDAO.removeStoreCart(menuName);
 
-        return "redirect:/main/customer/storeStat";
+        return "redirect:/main/admin/storeStat";
     }
 
     @PostMapping("/storeCheckout")
@@ -88,7 +88,7 @@ public class StoreOrderController {
 
         if (capital < totalPrice) {
             redirectAttributes.addFlashAttribute("overCapital", capital + "원 이하로 주문 해 주세요");
-            return "redirect:/main/customer/storeStat";
+            return "redirect:/main/admin/storeStat";
         }
 
         try {
@@ -105,6 +105,6 @@ public class StoreOrderController {
             throw new RuntimeException("발주 처리 중 오류 발생", e);
         }
 
-        return "redirect:/main/customer/storeStat";
+        return "redirect:/main/admin/storeStat";
     }
 }

@@ -1,34 +1,37 @@
 <!DOCTYPE html>
-<html xmlns:th="http:/www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="UTF-8">
   <title>MY PAGE</title>
+  <link rel="stylesheet" href="/css/style_customer.css">
 </head>
 
 <body>
-  <div class="container"></div>
-  <h1>MY PAGE</h1>
-  <div>
-    <h2>버거집입니다🍔</h2>
+  <div id="wrap_main">
+    <header id="header">
+      <h1>MY PAGE</h1>
+      <h2>버거집입니다🍔</h2>
+    </header>
     <p>안녕하세요, 고객님!</p>
-    <p>개인정보 페이지입니다. </p>
+    <p>개인정보 페이지입니다.</p>
+
+    <nav class="nav">
+      <a class="nav-link" href="/main/customer/myPage/accInfoUpdate">[1]회원 정보 수정</a>
+      <a class="nav-link" href="/main/customer/myPage/accInfoDelete">[2]회원 탈퇴</a>
+      <a class="nav-link" href="/main">[5]로그아웃</a>
+      <a href="/main/customer" class="nav-link">
+        회원 메인 페이지로 돌아가기
+      </a>
+    </nav>
+
+    <div class="message-box">
+      <p th:text="${message}" class="message success">CUSTOMER 로그인 성공!</p>
+      <p th:text="${error}" class="message error">아이디 또는 비밀번호를 확인해주세요.</p>
+    </div>
+
+
   </div>
-
-  <nav class="nav">
-    <a class="nav-link" href="/main/customer/myPage/accInfoUpdate">[1]회원 정보 수정</a>
-    <a class="nav-link" href="/main/customer/myPage/accInfoDelete">[2]회원 탈퇴</a>
-    <a class="nav-link" href="/main">[5]로그아웃</a>
-  </nav>
-
-  <div>
-    <p th:text="${message}">CUSTOMER 로그인 성공!</p> <!-- 로그인 성공 메시지 -->
-    <p th:text="${error}">아이디 또는 비밀번호를 확인해주세요.</p> <!-- 로그인 실패 메시지 -->
-  </div>
-
-  <a href="/main/customer" class="button"
-    style="display: inline-block; padding: 10px 15px; background-color: #4CAF50; color: white; text-align: center; text-decoration: none; border-radius: 5px;">회원
-    메인 페이지로 돌아가기</a>
 </body>
 
 </html>

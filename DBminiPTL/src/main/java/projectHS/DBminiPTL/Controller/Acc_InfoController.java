@@ -43,6 +43,7 @@ public class Acc_InfoController {
             // ADMIN 로그인 성공
             Session.loggedInUserId = userId; // Set user ID in session
             System.out.println(Session.loggedInUserId);
+            Session.storeId = aiDAO.adminStore(Session.loggedInUserId);
             model.addAttribute("message", "ADMIN 로그인 성공!");
             return "redirect:/main/admin"; // Redirect to the admin main page
         } else if (authLevel == 2) {
