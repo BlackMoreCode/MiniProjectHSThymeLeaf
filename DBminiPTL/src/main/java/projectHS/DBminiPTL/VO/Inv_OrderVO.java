@@ -1,10 +1,16 @@
-package projectHS.VO;
+package projectHS.DBminiPTL.VO;
+
+import org.springframework.jdbc.core.RowMapper;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Inv_OrderVO {
     private String menuName;
     private int price;
     private String category;
     private String descr;
+    private boolean editMode;
 
     // 생성자
     public Inv_OrderVO(String menuName, int price, String category, String descr) {
@@ -18,6 +24,13 @@ public class Inv_OrderVO {
     public Inv_OrderVO() {
     }
 
+    public boolean isEditMode() {
+        return editMode;
+    }
+
+    public void setEditMode(boolean editMode) {
+        this.editMode = editMode;
+    }
 
     // Getter
     public String getMenuName() {

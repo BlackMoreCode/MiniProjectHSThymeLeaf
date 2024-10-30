@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>재고 확인 및 발주</title>
+  <link rel="stylesheet" href="styles.css"> <!-- 외부 CSS 파일 -->
+  <style>
+    body {
+      display: flex;
+      height: 100vh;
+      /* 전체 높이를 화면에 맞춤 */
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+    }
+
+    .section {
+      flex: 1;
+      /* 각 섹션이 동일한 너비를 가짐 */
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      overflow-y: auto;
+      /* 세로 스크롤 가능 */
+    }
+
+    .section h2 {
+      text-align: center;
+    }
+
+    .button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 12px;
+      /* 버튼 텍스트 크기 */
+      width: 75px;
+      /* 버튼 너비 조정 */
+      height: 40px;
+      /* 버튼 높이 조정 */
+    }
+
+    .input-number {
+      width: 30px;
+      /* 숫자 입력창 너비 조정 */
+      height: 30px;
+      /* 숫자 입력창 높이 조정 */
+      font-size: 16px;
+      /* 입력창 텍스트 크기 */
+      margin-right: 5px;
+      /* 버튼과의 간격 */
+    }
+
+    .button:hover {
+      background-color: #218838;
+    }
+
+    .category {
+      margin-top: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .menu-list {
+      margin-left: 20px;
+      /* 메뉴 항목의 들여쓰기 */
+    }
+  </style>
+  <script>
+    function showAlert() {
+      alert("발주를 실행합니다.");
+    }
+  </script>
+</head>
+
+<body>
+
+  <div class="section" id="store-info">
+    <h2>가게 정보</h2>
+    <p><strong>가게 ID:</strong> <span th:text="${selectedStore}">STORE123</span></p>
+    <p><strong>현재 재고 현황:</strong></p>
+
+    <!-- 버거 카테고리 -->
+    <div class="category" th:if="${#lists.size(stockList) > 0}">
+      <h3 th:if="${#lists.contains(stockList, '버거')}">버거</h3>
+      <ul>
+        <li th:each="item : ${stockList}" th:if="${item.category == '버거'}">
+          <span th:text="${item.menuName}">상품 이름</span> -
+          <span th:text="${item.stock}">재고</span>개
+        </li>
+      </ul>
+    </div>
+
+    <!-- 사이드 카테고리 -->
+    <div class="category" th:if="${#lists.size(stockList) > 0}">
+      <h3 th:if="${#lists.contains(stockList, '사이드')}">사이드</h3>
+      <ul>
+        <li th:each="item : ${stockList}" th:if="${item.category == '사이드'}">
+          <span th:text="${item.menuName}">상품 이름</span> -
+          <span th:text="${item.stock}">재고</span>개
+        </li>
+      </ul>
+    </div>
+
+    <!-- 음료 카테고리 -->
+    <div class="category" th:if="${#lists.size(stockList) > 0}">
+      <h3 th:if="${#lists.contains(stockList, '음료')}">음료</h3>
+      <ul>
+        <li th:each="item : ${stockList}" th:if="${item.category == '음료'}">
+          <span th:text="${item.menuName}">상품 이름</span> -
+          <span th:text="${item.stock}">재고</span>개
+        </li>
+      </ul>
+    </div>
+
+    <p><strong>매출액:</strong> <span th:text="${sales}">₩0</span> 원</p>
+  </div>
+
+  <!-- 가운데 섹션: 발주 및 자본금 -->
+  <div class="section" id="order-section">
+    <h2>발주하기</h2>
+    <p><strong>현재 자본금:</strong> <span th:text="${capital}">₩0</span> 원</p>
+
+    <!-- 카테고리별 발주 항목 -->
+    <div class="category" onclick="toggleMenu('burgerMenu')">
+      <h3>버거</h3>
+    </div>
+    <ul id="burgerMenu" class="menu-list" style="display: block;">
+      <li th:each="item : ${products}" th:if="${item.category == '버거'}">
+        <form th:action="@{/main/customer/addToCart}" method="post">
+          <span th:text="${item.menuName}">상품 이름</span> -
+          <span th:text="${item.price}">₩0</span> - <!-- 가격 표시 -->
+          <input type="number" class="input-number" th:name="count" min="1" value="1" />
+          <input type="hidden" th:name="'menuName'" th:value="${item.menuName}" />
+          <input type="hidden" th:name="'price'" th:value="${item.price}" /> <!-- 가격 전달 -->
+          <button type="submit" class="button">장바구니에 추가</button>
+        </form>
+      </li>
+    </ul>
+
+    <div class="category" onclick="toggleMenu('sideMenu')">
+      <h3>사이드</h3>
+    </div>
+    <ul id="sideMenu" class="menu-list" style="display: block;">
+      <li th:each="item : ${products}" th:if="${item.category == '사이드'}">
+        <form th:action="@{/main/customer/addToCart}" method="post">
+          <span th:text="${item.menuName}">상품 이름</span> -
+          <span th:text="${item.price}">₩0</span> - <!-- 가격 표시 -->
+          <input type="number" class="input-number" th:name="count" min="1" value="1" />
+          <input type="hidden" th:name="'menuName'" th:value="${item.menuName}" />
+          <input type="hidden" th:name="'price'" th:value="${item.price}" /> <!-- 가격 전달 -->
+          <button type="submit" class="button">장바구니에 추가</button>
+        </form>
+      </li>
+    </ul>
+
+    <div class="category" onclick="toggleMenu('drinkMenu')">
+      <h3>음료</h3>
+    </div>
+    <ul id="drinkMenu" class="menu-list" style="display: block;">
+      <li th:each="item : ${products}" th:if="${item.category == '음료'}">
+        <form th:action="@{/main/customer/addToCart}" method="post">
+          <span th:text="${item.menuName}">상품 이름</span> -
+          <span th:text="${item.price}">₩0</span> - <!-- 가격 표시 -->
+          <input type="number" class="input-number" th:name="count" min="1" value="1" />
+          <input type="hidden" th:name="'menuName'" th:value="${item.menuName}" />
+          <input type="hidden" th:name="'price'" th:value="${item.price}" /> <!-- 가격 전달 -->
+          <button type="submit" class="button">장바구니에 추가</button>
+        </form>
+      </li>
+    </ul>
+  </div>
+
+
+
+  <!-- 우측 섹션: 장바구니 -->
+  <div class="section" id="cart-section">
+    <h2>장바구니</h2>
+    <ul>
+      <li th:each="cart : ${cart}">
+        <span th:text="${cart.name}">메뉴 이름</span> -
+        <span th:text="${cart.price}">가격</span> 원 -
+        <span th:text="${cart.count}">수량</span> 개
+
+        <form th:action="@{/main/customer/cartUpdate}" method="post" style="display:inline;">
+          <input type="hidden" th:value="${cart.name}" name="menuName" />
+          <input type="number" name="newCount" th:value="${cart.count}" min="1" required />
+          <button type="submit">수량 변경</button>
+        </form>
+
+        <form th:action="@{/main/customer/cartRemove}" method="post" style="display:inline;">
+          <input type="hidden" th:value="${cart.name}" name="menuName" />
+          <button type="submit">삭제</button>
+        </form>
+      </li>
+    </ul>
+
+    <h3>총 합계: <span th:text="${totalPrice}" name="totalPrice">0</span> 원</h3>
+    <div th:if="${overCapital}" style="color: red; margin-left: 10px;">
+      <p th:text="${overCapital}"></p>
+    </div>
+    <form th:action="@{/main/customer/storeCheckout}" method="post" onsubmit="showAlert()">
+      <button class="button" id="placeOrder">발주 실행</button>
+    </form>
+  </div>
+  </div>
+
+
+  <script>
+    function toggleMenu(menuId) {
+      const menu = document.getElementById(menuId);
+      // 메뉴가 보이는 상태에서 클릭하면 숨기고, 숨겨진 상태에서 클릭하면 보여줍니다.
+      if (menu.style.display === "block") {
+        menu.style.display = "none"; // 현재 펼쳐져 있으면 접기
+      } else {
+        menu.style.display = "block"; // 현재 접혀 있으면 펼치기
+      }
+    }
+  </script>
+
+
+</body>
+
+</html>

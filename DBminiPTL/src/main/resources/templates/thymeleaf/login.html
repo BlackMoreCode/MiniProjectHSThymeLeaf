@@ -2,42 +2,41 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8">
-  <title>BUGERZIP MAIN</title>
+    <meta charset="UTF-8">
+    <title>BUGERZIP MAIN</title>
 </head>
 
 <body>
-  <div class="container"></div>
-  <h1>🍔버거집🍔</h1>
-  <div>
-    <h2>버거집에 오신 것을 환영합니다.</h2>
-    <p>이용을 원하시는 분은 로그인해 주세요.</p>
-  </div>
+    <div class="container"></div>
+    <h1>🍔버거집🍔</h1>
+    <div>
+        <h2>버거집에 오신 것을 환영합니다.</h2>
+        <p>이용을 원하시는 분은 로그인해 주세요.</p>
+    </div>
 
-  <form action="/main/login" method="post">
-    <label for="userId">아이디</label>
-    <input type="text" id="userId" name="userId" required>
-    <br>
-    <label for="userPw">비밀번호</label>
-    <input type="password" id="userPw" name="userPw" required>
-    <br>
-    <button type="submit">로그인</button>
-  </form>
+    <form action="/main/login" method="post">
+        <label for="userId">아이디</label>
+        <input type="text" id="userId" name="userId" required>
+        <br>
+        <label for="userPw">비밀번호</label>
+        <input type="password" id="userPw" name="userPw" required>
+        <br>
+        <button type="submit">로그인</button>
+    </form>
 
+    <a href="main/signup">
+        <button type="button">회원가입</button>
+    </a>
 
-  <a href="main/signup">
-    <button type="button">회원가입</button>
-  </a>
-
-  <!-- Controller서 부터 메세지를 보내기 위한 자바스크립트 alert 블록. 클라이언트  -->
-  <script th:inline="javascript">
-    const alertMessage = "잘못된 ID 나 비밀번호 입니다. 다시 입력하세요.";
-    console.log(alertMessage);
-    if (alertMessage) {
-      alert(alertMessage);
-    }
-  </script>
-
+    <!-- 클라이언트 사이드 자바스크립트 alert블록. 로그인 실패시에만 뜨게 수정 -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const alertMessage = /*[[${alertMessage}]]*/ '';
+        if (alertMessage) {
+            alert(alertMessage);
+        }
+        /*]]>*/
+    </script>
 </body>
 
 </html>

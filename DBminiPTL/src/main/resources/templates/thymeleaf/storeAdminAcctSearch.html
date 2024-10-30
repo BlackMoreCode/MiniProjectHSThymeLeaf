@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>계좌 잔액 현황</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .balance {
+      text-align: center;
+      font-size: 24px;
+      margin-top: 20px;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .menu button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      padding: 15px 20px;
+      margin: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+      width: 200px;
+    }
+
+    .menu button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>계좌 잔액 현황</h1>
+  <div class="balance" th:text="'잔액: ' + ${capitalSc} + ' 원'"></div>
+
+  <div class="menu">
+    <button onclick="window.history.back()">뒤로가기</button>
+  </div>
+</body>
+
+</html>

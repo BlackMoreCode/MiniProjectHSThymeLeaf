@@ -51,8 +51,8 @@ public class Acc_InfoController {
             return "redirect:/main/hq"; // Redirect to the HQ main page
         } else {
             // 로그인 실패
-            model.addAttribute("error", "아이디 또는 비밀번호를 확인해주세요.");
-            return "thymeleaf/login"; // Return to the login page with an error message
+            model.addAttribute("alertMessage", "아이디 또는 비밀번호를 확인해주세요."); // Add alert message
+            return "thymeleaf/login"; // Redirect to login page with error
         }
     }
 

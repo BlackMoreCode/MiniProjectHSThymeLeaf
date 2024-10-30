@@ -1,5 +1,8 @@
 package projectHS.DBminiPTL.DAO;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 import projectHS.DBminiPTL.Common.Common;
 import projectHS.VO.Order_RecordVO;
 
@@ -7,39 +10,36 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+@Repository
 public class Order_RecordDAO {
 
     static Connection conn = null;
     static PreparedStatement psmt = null;
     static ResultSet rs = null;
 
+    private final JdbcTemplate jdbcTemplate;
+
+    public Order_RecordDAO(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+
     // 고객의 주문 정보 출력
-    // 메인에서 이 메서드만 실행하면 출력됨
-    public static void userOrderList(String userId) {
-        List<Order_RecordVO> vo = new ArrayList<>();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일, HH시 mm분 ss초");
+    // 리스트를 반환
+    public List<Order_RecordVO> userOrderList(String userId) {
         String sql = "SELECT * FROM ORDER_RECORD WHERE USER_ID = ?";
+        SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일, HH시 mm분 ss초");
 
-        try {
-            conn = Common.getConnection();
-            psmt = conn.prepareStatement(sql);
-            psmt.setString(1, userId);
-            rs = psmt.executeQuery();
+        List<Order_RecordVO> vo = jdbcTemplate.query(sql, new Object[]{userId}, (rs, rowNum) -> {
+            String code = rs.getString("ORDER_CODE");
+            String list = rs.getString("ORDER_LIST");
+            Timestamp time = rs.getTimestamp("ORDER_TIME");
+            int price = rs.getInt("ORDER_PRICE");
+            String store = rs.getString("STORE_ID");
 
-            while (rs.next()) {
-                String code = rs.getString("ORDER_CODE");
-                String list = rs.getString("ORDER_LIST");
-                Timestamp time = rs.getTimestamp("ORDER_TIME");
-                int price = rs.getInt("ORDER_PRICE");
-                String store = rs.getString("STORE_ID");
-
-                String formattedTime = format.format(time); // 주문시간을 문자열로 변환
-
-                vo.add(new Order_RecordVO(code, list, formattedTime, price, store));
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+            String formattedTime = format.format(time);
+            return new Order_RecordVO(code, list, formattedTime, price, store);
+        });
 
         // 지점 이름순 정렬, 지점 이름이 같다면 주문시간이 빠른순 정렬
         vo.sort((o1, o2) -> {
@@ -49,42 +49,31 @@ public class Order_RecordDAO {
             return o1.getOrderTime().compareTo(o2.getOrderTime());
         });
 
-        System.out.println("=".repeat(15) + userId + " 고객님의 주문 내역" + "=".repeat(15));
-        for (Order_RecordVO e : vo) {
-            System.out.println("주문 지점 : " + e.getStoreId());
-            System.out.println("주문 시각 : " + e.getOrderTime());
-            System.out.println("*주문 내역*\n" + e.getOrderList()
-                    .replace("/", " : ").replace(",", "\n").replace("+", "\n"));
-            System.out.println("총 가격 : " + e.getOrderPrice() + "원");
-            System.out.println("-".repeat(15));
-        }
+        return vo;
     }
 
     // 주문 내역 삽입(InvDAO 에서 결제 시 동작)
-    public static void orderRecordInsert(String storeId, String orderList, int price, String userId) {
-        String sql = "INSERT INTO ORDER_RECORD VALUES (?, ?, ?, ?, ?, ?)";
-        Timestamp timestamp = new Timestamp(new java.util.Date().getTime());
+
+    public void orderRecordInsert(String storeId, String orderList, int price, String userId) {
+        String sql = "INSERT INTO ORDER_RECORD (ORDER_CODE, ORDER_LIST, ORDER_TIME, ORDER_PRICE, USER_ID, STORE_ID) VALUES (?, ?, ?, ?, ?, ?)";
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
         String timeStr = format.format(timestamp);
 
-        try {
-            conn = Common.getConnection();
-            psmt = conn.prepareStatement(sql);
-            psmt.setString(1, (storeId + timeStr));
-            psmt.setString(2, orderList);
-            psmt.setTimestamp(3, timestamp);
-            psmt.setInt(4, price);
-            psmt.setString(5, userId);
-            psmt.setString(6, storeId);
-            int rows = psmt.executeUpdate();
+        String orderId = storeId + timeStr;
 
-            System.out.println(rows + "개 행 삽입");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        } finally {
-            Common.close(psmt);
-            Common.close(conn);
-        }
+        System.out.println(orderList + "삽입");
+
+        // JDBC 템플릿을 사용하여 데이터 삽입
+        int rows = jdbcTemplate.update(sql, orderId, orderList, timestamp, price, userId, storeId);
+
+        System.out.println(rows + "개 행 삽입");
     }
+
+
+    public String stringToList(String lst) {
+        return lst.replace("/", " : ").replace(",", "\n").replace("+", "\n");
+    }
+
 
 }

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>매출 현황</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .total-sales {
+      text-align: center;
+      font-size: 24px;
+      margin-top: 20px;
+    }
+
+    .back-button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .back-button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>매출 현황</h1>
+  <div class="total-sales" th:text="'총 매출액: ' + ${sales} + ' 원'"></div>
+
+  <!-- 뒤로가기 버튼 추가 -->
+  <button class="back-button" onclick="window.history.back()">뒤로가기</button>
+
+</body>
+
+</html>

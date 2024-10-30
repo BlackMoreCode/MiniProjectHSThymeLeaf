@@ -1,4 +1,4 @@
-package projectHS.VO;
+package projectHS.DBminiPTL.VO;
 
 public class InvVO {
     private String menuName;

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Title</title>
+  <meta charset="UTF-8">
+  <style>
+    h1 {
+      text-align: center;
+    }
+
+    .success {
+      color: green;
+      font-weight: bold;
+      font-size: 16px;
+      /* 성공 메시지 크기 */
+    }
+
+    .failure {
+      color: red;
+      font-weight: bold;
+      font-size: 16px;
+      /* 실패 메시지 크기 */
+    }
+
+    .button-container {
+      text-align: center;
+      /* 버튼 중앙 정렬 */
+      margin-top: 20px;
+      /* 버튼과 메시지 사이에 여백 추가 */
+    }
+
+    .button-container button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      padding: 15px 20px;
+      margin: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 14px;
+      width: 200px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>계좌 송금 결과</h1>
+
+  <!-- Success Message -->
+  <div th:if="${isSuccess}" style="text-align: center;" class="success">
+    계좌 송금 완료
+  </div>
+
+  <!-- Failure Message -->
+  <div th:if="${!isSuccess}" style="text-align: center;" class="failure">
+    계좌 송금 실패
+  </div>
+
+  <!-- Button Container -->
+  <div class="button-container">
+    <a href="/main/admin/account">
+      <button>
+        <span style="display: block;"> 계좌 메뉴 </span> <!-- 첫 번째 줄 -->
+        <span style="display: block;"> 화면으로 이동 </span> <!-- 두 번째 줄 -->
+      </button>
+    </a>
+  </div>
+</body>
+
+</html>

@@ -1,209 +1,122 @@
 package projectHS.DBminiPTL.DAO;
 
-import projectHS.DBminiPTL.Common.Common;
-import projectHS.VO.StoreVO;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.math.BigDecimal;
 
+@Repository
+@Slf4j
 
 public class StoreDAO {
-    private static Connection conn = null;
-    private static Statement stmt = null;
-    private static PreparedStatement psmt = null;
-    private static ResultSet rs = null;
-    private Scanner sc = null;
+    private final JdbcTemplate jdbcTemplate;
 
-    public StoreDAO() {
-        sc = new Scanner(System.in);
+    public StoreDAO(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     // 가상 계좌 충전
-    public boolean cpCharge(int i, String userId) { // capital Charge
-        try {
-            conn = Common.getConnection(); // 오라클 DB연결
-            String sql = "UPDATE STORE SET capital = capital + ? WHERE store_id = ?"; // 계좌 충전
-            psmt = conn.prepareStatement(sql); // 동적인 데이터로 받을때 사용 (?)
-            psmt.setInt(1, i); // capital 설정
-            psmt.setString(2, userId); // store_id 설정
+    public BigDecimal cpCharge(BigDecimal amount, String storeId) { // capital Charge
+        String sql = "UPDATE STORE SET capital = capital + ? WHERE store_id = ?";
+        int rowsAffected = jdbcTemplate.update(sql, amount, storeId);
 
-            if (psmt.executeUpdate() == 0) { // UPDATE
-                throw new Exception();
-            };
-            Common.close(psmt);
-            Common.close(conn);
-            return true;
-        } catch (Exception e) {
-            System.out.println("계좌 입금 전송 실패");
-            Common.close(psmt);
-            Common.close(conn);
-            return false;
+        if (rowsAffected > 0) {
+            // 업데이트 성공 시, 현재 자본 값을 반환
+            String selectSql = "SELECT capital FROM STORE WHERE store_id = ?";
+            return jdbcTemplate.queryForObject(selectSql, new Object[]{storeId}, BigDecimal.class);
+        } else {
+            // 업데이트 실패 시 null 반환
+            return null;
         }
     }
-
 
     // DataBase Table Store에 store_id와 로그인 했을때 지점이 같은지 확인
-    public String getCpCStoreId(String userId) {
-        String storeId = "";
-        try {
-            conn = Common.getConnection();
-            String sql = "SELECT STORE_ID FROM ACC_INFO WHERE USER_ID = '" + userId + "'";
-            psmt = conn.prepareStatement(sql); //createStement 랑 prepareStatement의 차이를 공부해야한다
-            rs = psmt.executeQuery();
-            if(rs.next()) {
-                storeId = rs.getString("STORE_ID");
-            }
-        } catch(Exception e) {
-            System.out.println();
-        }
-        Common.close(rs);
-        Common.close(psmt);
-        Common.close(conn);
-        return storeId;
-    }
+//    public String getCpCStoreId(String userId) {
+//        String storeId = null;
+//        String sql = "SELECT STORE_ID FROM ACC_INFO WHERE USER_ID = '" + userId + "'";
+//        storeId = jdbcTemplate.queryForObject(sql, new Object[]{userId},String.class);
+//        return storeId;
+//    }
 
     // 가용금액 표시
-    public List<StoreVO> cpSelect(String cpStoreId) { // capitalSelect
-        List<StoreVO> list = new ArrayList<>();
-        try {
-            conn = Common.getConnection(); // 오라클 DB연결
-            stmt = conn.createStatement(); // statement 생성
-            String query = "SELECT store_id, capital FROM Store WHERE store_id = '" + cpStoreId + "'";
-            rs = stmt.executeQuery(query);
-
-            while (rs.next()) {
-                String storeId =rs.getString("store_id");
-                int capital = rs.getInt("capital");
-                StoreVO vo = StoreVO.withCapital(storeId, capital);
-                list.add(vo);
-            }
-        } catch (Exception e) {
-            System.out.println("계좌 조회 실패");
-        } finally{
-            Common.close(rs);
-            Common.close(psmt);
-            Common.close(conn);
-        }
-        return list;
+    public BigDecimal cpSelect(String cpStoreId) { // capitalSelect
+        String sql = "SELECT capital FROM Store WHERE store_id = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{cpStoreId}, BigDecimal.class);
     }
 
     // DataBase Table Store에 store_id와 로그인 했을때 지점이 같은지 확인
-    public String getCpSStoreId(String userId) {
-        String storeId = "";
-        try {
-            conn = Common.getConnection();
-            String sql = "SELECT STORE_ID FROM ACC_INFO WHERE USER_ID = '" + userId + "'";
-            psmt = conn.prepareStatement(sql); //createStement 랑 prepareStatement의 차이를 공부해야한다
-            rs = psmt.executeQuery();
-            if(rs.next()) {
-                storeId = rs.getString("STORE_ID");
-            }
-        } catch(Exception e) {
-            System.out.println();
-        }
-        Common.close(rs);
-        Common.close(psmt);
-        Common.close(conn);
-        return storeId;
-    }
+//    public String getCpSStoreId(String userId) {
+//        String storeId = null;
+//        String sql = "SELECT STORE_ID FROM ACC_INFO WHERE USER_ID = '" + userId + "'";
+//        storeId = jdbcTemplate.queryForObject(sql, new Object[]{userId},String.class);
+//        return storeId;
+//    }
 
     // 매출현황
-    public List<StoreVO> slSelect(String slStoreId) { // capitalSelect
-        List<StoreVO> list = new ArrayList<>();
+    public BigDecimal slSelect(String storeId) {
+        String sql = "SELECT sales FROM Store WHERE store_id = ?";
         try {
-            conn = Common.getConnection(); // 오라클 DB연결
-            stmt = conn.createStatement(); // statement 생성
-            String query =  "SELECT store_id, sales FROM Store WHERE store_id = '" + slStoreId + "'";
-            rs = stmt.executeQuery(query);
-
-            while (rs.next()) {
-                String storeId = rs.getString("store_id");
-                int sales = rs.getInt("sales");
-                StoreVO vo = StoreVO.withSales(storeId, sales);
-                list.add(vo);
-            }
-        } catch (Exception e) {
-            System.out.println("총 매출 현황 조회 실패");
-        } finally{
-            Common.close(rs);
-            Common.close(psmt);
-            Common.close(conn);
+            return jdbcTemplate.queryForObject(sql, new Object[]{storeId}, BigDecimal.class);
+        } catch (EmptyResultDataAccessException e) {
+            // Handle case where no result is found
+            log.warn("No sales record found for store ID: " + storeId);
+            return BigDecimal.ZERO; // Or any default value appropriate for your use case
         }
-        return list;
     }
+
+
+
+
 
     // DataBase Table Store에 store_id와 로그인 했을때 지점이 같은지 확인
-    public String getSlStoreId(String userId) {
-        String storeId = "";
-        try {
-            conn = Common.getConnection();
-            String sql = "SELECT STORE_ID FROM ACC_INFO WHERE USER_ID = '" + userId + "'";
-            psmt = conn.prepareStatement(sql); //createStement 랑 prepareStatement의 차이를 공부해야한다
-            rs = psmt.executeQuery();
-            if(rs.next()) {
-                storeId = rs.getString("STORE_ID");
-            }
-        } catch(Exception e) {
-            System.out.println();
-        }
-        Common.close(rs);
-        Common.close(psmt);
-        Common.close(conn);
-        return storeId;
-    }
+//    public String getSlStoreId(String userId) {
+//        String storeId = null;
+//        String sql = "SELECT STORE_ID FROM ACC_INFO WHERE USER_ID = '" + userId + "'";
+//        storeId = jdbcTemplate.queryForObject(sql, new Object[]{userId},String.class);
+//        return storeId;
+//    }
 
-    // 매출현황에 소비자가 지불한 메뉴 금액만큼 추가
-    public static void salesPTp(int tp, String store_id) { // sales + Totalprice
-        try {
-            conn = Common.getConnection(); // 오라클 DB연결
-            String sql = "UPDATE STORE SET sales = sales + ? WHERE store_id = ?"; // 계좌 충전
-            psmt = conn.prepareStatement(sql); // 동적인 데이터로 받을때 사용 (?)
-            psmt.setInt(1, tp); // capital 설정
-            psmt.setString(2,store_id); // store_id 설정
+//    // 매출현황에 소비자가 지불한 메뉴 금액만큼 추가
+//    public static void salesPTp(int tp, String store_id) { // sales + Totalprice
+//        try {
+//            conn = Common.getConnection(); // 오라클 DB연결
+//            String sql = "UPDATE STORE SET sales = sales + ? WHERE store_id = ?"; // 계좌 충전
+//            psmt = conn.prepareStatement(sql); // 동적인 데이터로 받을때 사용 (?)
+//            psmt.setInt(1, tp); // capital 설정
+//            psmt.setString(2,store_id); // store_id 설정
+//
+//            if (psmt.executeUpdate() == 0) { // UPDATE
+//                throw new Exception();
+//            };
+//            Common.close(psmt);
+//            Common.close(conn);
+//
+//        } catch (Exception e) {
+//            System.out.println("매출액 합산 실패");
+//            Common.close(psmt);
+//            Common.close(conn);
+//        }
+//    }
 
-            if (psmt.executeUpdate() == 0) { // UPDATE
-                throw new Exception();
-            };
-            Common.close(psmt);
-            Common.close(conn);
-
-        } catch (Exception e) {
-            System.out.println("매출액 합산 실패");
-            Common.close(psmt);
-            Common.close(conn);
-        }
-
-    }
-
-    public int cpChargeInput() {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("계좌에 송금할 금액 입력 : ");
-        return sc.nextInt();
-    }
-
-
-    public List<StoreVO> cpSelectResult(List<StoreVO> list ) {
-        System.out.println("-------------------------------------------------");
-        for (StoreVO e : list) {
-            System.out.print("버거집 " + e.getStoreId() + "의 계좌 잔액 현황 : " + e.getCapital() + "원");
-            System.out.println();
-        }
-        System.out.println("-------------------------------------------------");
-        return list;
-    }
-
-    public void slSelectResult(List<StoreVO> list ) {
-        System.out.println("-------------------------------------------------");
-
-        for (StoreVO e : list) {
-            System.out.print("버거집 " + e.getStoreId() + "의 총 매출 현황 : " + e.getSales() + "원");
-            System.out.println();
-        }
-        System.out.println("-------------------------------------------------");
-    }
+//    public static class cpSelectRowMapper implements RowMapper<StoreVO> {
+//        @Override
+//        public StoreVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+//            return new StoreVO(
+//                    rs.getString("storeId"),
+//                    rs.getInt("capital")
+//            );
+//        }
+//    }
+//
+//    public static class slSelectRowMapper implements RowMapper<StoreVO> {
+//
+//        @Override
+//        public StoreVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+//            return new StoreVO(
+//                    rs.getBigDecimal("sales")
+//            );
+//        }
+//    }
 }

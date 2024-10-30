@@ -39,4 +39,8 @@ public class SingleMenu {
     public int getCount() {
         return count;
     }
+
+    public void setCount(int cnt) {
+        this.count = cnt;
+    }
 }
