@@ -11,7 +11,7 @@
 
 <body>
   <h1>회원 삭제</h1>
-  <form action="/customer/myPage/accInfoDelete" method="post">
+  <form action="/main/customer/myPage/accInfoDelete" method="post">
     <p>정말로 계정을 삭제하시겠습니까? 이는 되돌릴 수 없습니다.</p>
     <input type="hidden" name="userId" th:value="${accInfoVO.userId}" />
     <input type="submit" value="계정 삭제" />

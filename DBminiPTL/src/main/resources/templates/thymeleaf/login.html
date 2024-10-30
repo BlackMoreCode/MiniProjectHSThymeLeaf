@@ -1,39 +1,54 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="utf-8">
   <title>BURGERZIP MAIN</title>
-  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/style_customer.css}">
 </head>
 
 <body>
-<div id="wrap_login">
-  <div id="area">
-    <div id="header">
-      <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F64Fyi%2FbtsKopBV7f8%2FV9c159yoKN4R6s0C6HV2i0%2Fimg.png" width="200"/>
-      <br><h3>버거집에 오신 것을 환영합니다🍔</h3>
-      <p>이용을 원하시는 분은 로그인해 주세요.</p><br>
-    </div>
-
-    <div id="input_box_login">
-      <form action="/main/login" method="post">
-        <input class="input" type="text" id="userId" name="userId" placeholder="아이디를 입력해 주세요." required/>
+  <div id="wrap_login">
+    <div id="area">
+      <div id="header">
+        <img
+          src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F64Fyi%2FbtsKopBV7f8%2FV9c159yoKN4R6s0C6HV2i0%2Fimg.png"
+          width="200" />
         <br>
-        <input class="input" type="password" id="userPw" name="userPw" placeholder="비밀번호를 입력해 주세요." required/>
-        <br>
+        <h3>버거집에 오신 것을 환영합니다🍔</h3>
+        <p>이용을 원하시는 분은 로그인해 주세요.</p><br>
+      </div>
 
-        <span class="submit"><input type="submit" value="로그인" /></span>
+      <div id="input_box_login">
+        <form action="/main/login" method="post">
+          <input class="input" type="text" id="userId" name="userId" placeholder="아이디를 입력해 주세요." required />
+          <br>
+          <input class="input" type="password" id="userPw" name="userPw" placeholder="비밀번호를 입력해 주세요." required />
+          <br>
+
+          <span class="submit"><input type="submit" value="로그인" /></span>
 
 
-      </form>
-      <ul id="sub_menu">
+        </form>
+        <ul id="sub_menu">
 
-        <li><a href="/main/signup">버거집 회원 가입</a></li>
+          <li><a href="/main/signup">버거집 회원 가입</a></li>
 
-      </ul>
-    </div>
+        </ul>
+      </div>
     </div>
   </div>
-</div>
+  </div>
+
+  <!-- 클라이언트 사이드 자바스크립트 alert블록. 로그인 실패시에만 뜨게 수정 -->
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+    const alertMessage = /*[[${alertMessage}]]*/ '';
+    if (alertMessage) {
+      alert(alertMessage);
+    }
+    /*]]>*/
+  </script>
 </body>
+
 </html>

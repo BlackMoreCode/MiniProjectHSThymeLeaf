@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
-  <title>HQ MAIN</title>
+  <title>BURGERZIP HQ MAIN</title>
+  <link rel="stylesheet" th:href="@{/css/style_hq.css}">
 </head>
+
 <body>
-<div class="container"></div>
-<h1>HQ MAIN</h1>
-<div>
-  <h2>버거집입니다🍔</h2>
-  <p>안녕하세요, 본사 담당자님!</p>
-  <p>여기서 각 지점의 발주 가능 메뉴 관리를 할 수 있습니다.</p>
+<div id="wrap_hq_main">
+  <div id="area">
+    <div id="header">
+      <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F64Fyi%2FbtsKopBV7f8%2FV9c159yoKN4R6s0C6HV2i0%2Fimg.png" width="100"/>
+      <br><h3>버거집 HQ MAIN🍔</h3>
+      <p>안녕하세요 본사 담당자님,</p>
+      <p>여기서 각 지점의 발주 가능 메뉴 관리를 할 수 있습니다.</p><br>
+    </div><br><br><br>
+    <span class="submit"><input type="button" value="발주 메뉴 관리" onclick="window.location.href='/main/hq/hqInvMngr';" /></span>
+    <span class="submit"><input type="submit" value="로그아웃" onclick="window.location.href='/main';" /></span>
+  </div>
 </div>
 
-<nav class="nav">
-  <a class="nav-link" href="/main/hq/hqInvMngr">[1]메뉴 관리</a>
-  <a class="nav-link" href="/main">[2]로그아웃</a>
-</nav>
 
 <div>
   <p th:text="${message}">HQ 로그인 성공!</p> <!-- 로그인 성공 메시지 -->

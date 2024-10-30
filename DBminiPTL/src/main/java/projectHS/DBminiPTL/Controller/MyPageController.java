@@ -14,7 +14,7 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
-@RequestMapping("/customer/myPage")
+@RequestMapping("/main/customer/myPage")
 public class MyPageController {
 
     @Autowired

@@ -1,0 +1,239 @@
+/* test */
+/* Login + signup CSS */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+body {
+  background-color: #f1f1f1;
+}
+
+#wrap_login {
+  width: 500px;
+  min-width: 400px;
+  height: 650px;
+  margin: 100px auto 0 auto;
+  background-color: #ffffff;
+}
+
+#wrap_signup {
+  width: 500px;
+  min-width: 400px;
+  height: 1000px;
+  margin: 100px auto 0 auto;
+  background-color: #ffffff;
+}
+
+#area {
+  width: 330px;
+  background-color: #ffffff;
+  margin: 0 auto;
+  position: relative;
+}
+
+#header {
+  width: 100%;
+  height: 50px;
+  padding: 60px 0 60px;
+  text-align: center;
+}
+
+#input_box_login {
+  width: 100%;
+  margin: 0 auto;
+  padding: 160px 0 0;
+}
+
+#input_box_signup {
+  width: 100%;
+  margin: 0 auto;
+  padding: 100px 0 0;
+}
+
+#input_box_login .input {
+  width: 100%;
+  height: 50px;
+  padding: 15px 10px 14px;
+  box-sizing: border-box;
+  border: 1px solid #cccccc;
+  margin-bottom: 10px;
+}
+
+#input_box_signup .input {
+  width: 100%;
+  height: 50px;
+  padding: 15px 10px 14px;
+  box-sizing: border-box;
+  border: 1px solid #cccccc;
+  margin-bottom: 10px;
+}
+
+.checkbox {
+  display: inline-block;
+  font-size: 14px;
+  color: #aaa;
+}
+
+.submit {
+  display: block;
+  margin: 10px 0 20px;
+}
+
+.submit > input {
+  width: 100%;
+  height: 60px;
+  color: #ffffff;
+  background: #000000;
+  text-align: center;
+  border: none;
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.submit > button {
+  width: 100%;
+  height: 60px;
+  color: #ffffff;
+  background: #000000;
+  text-align: center;
+  border: none;
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+#input_box > #sub_menu {
+  margin: 36px 0;
+  display: block;
+  height: 22px;
+}
+
+
+#sub_menu {
+  text-align: center;
+}
+
+#sub_menu > li > a {
+  color: #aaa;
+  font-size: 14px;
+}
+
+.description {
+  color: #aaa;
+  font-size: 12px;
+}
+
+
+/* Main container style */
+#wrap_main {
+  width: fit-content;
+  min-width: 400px;
+  margin: 100px auto;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Header style */
+#header h1 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+#header h2 {
+  font-size: 20px;
+  color: #555;
+  margin: 5px 0;
+}
+
+/* Navigation links */
+.nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.nav-link {
+  display: block;
+  width: fit-content;
+  /* max-width: 90%; */
+  padding: 12px;
+  margin: 8px 0;
+  background-color: #000000;
+  color: white;
+  text-align: center;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  background-color: #0056b3;
+}
+
+/* Message styles */
+.message-box {
+  margin-top: 20px;
+}
+
+.message {
+  font-size: 14px;
+}
+
+.success {
+  color: green;
+}
+
+.error {
+  color: red;
+}
+
+/* Receipt container styles */
+.receipt-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Individual receipt card styles */
+.receipt-card {
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd; /* 나누는 선 추가 */
+}
+
+.receipt-card:last-child {
+  border-bottom: none; /* Remove divider from the last item */
+}
+
+.receipt-card h3 {
+  margin: 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.receipt-card p {
+  margin: 5px 0;
+  color: #555;
+  font-size: 14px;
+}
