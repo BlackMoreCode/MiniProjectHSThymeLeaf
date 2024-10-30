@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import projectHS.DBminiPTL.Common.Common;
-import projectHS.VO.Order_RecordVO;
+import projectHS.DBminiPTL.VO.Order_RecordVO;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -32,16 +32,17 @@ public class Order_RecordDAO {
 
         List<Order_RecordVO> vo = jdbcTemplate.query(sql, new Object[]{userId}, (rs, rowNum) -> {
             String code = rs.getString("ORDER_CODE");
-            String list = rs.getString("ORDER_LIST");
+            String lst = rs.getString("ORDER_LIST");
+            String list = stringToList(lst);
             Timestamp time = rs.getTimestamp("ORDER_TIME");
-            int price = rs.getInt("ORDER_PRICE");
+            int price = rs.getInt("ORDER_PRICE"); // Ensure this is the correct field name
             String store = rs.getString("STORE_ID");
 
             String formattedTime = format.format(time);
             return new Order_RecordVO(code, list, formattedTime, price, store);
         });
 
-        // 지점 이름순 정렬, 지점 이름이 같다면 주문시간이 빠른순 정렬
+        // Sort by store name and then by order time
         vo.sort((o1, o2) -> {
             if (!o1.getStoreId().equals(o2.getStoreId())) {
                 return o1.getStoreId().compareTo(o2.getStoreId());
@@ -71,8 +72,8 @@ public class Order_RecordDAO {
     }
 
 
-    public String stringToList(String lst) {
-        return lst.replace("/", " : ").replace(",", "\n").replace("+", "\n");
+    public static String stringToList(String lst) {
+        return lst.replace("/", " : ").replace(",", "<br>").replace("+", "<br>");
     }
 
 
