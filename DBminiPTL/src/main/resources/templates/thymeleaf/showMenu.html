@@ -4,164 +4,196 @@
 <head>
   <meta charset="UTF-8">
   <title>고객 주문</title>
-  <link rel="stylesheet" href="style_customer.css"> <!-- Updated to use style_customer.css -->
+  <link rel="stylesheet" href="styles.css"> <!-- 외부 CSS 파일 -->
+  <style>
+    body {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .menu,
+    .cart {
+        width: 45%;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .menu {
+        border-right: 1px solid #ccc;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    form {
+        display: inline;
+    }
+
+    button {
+        margin-left: 5px;
+    }
+  </style>
+
+  <script>
+    function showAlert() {
+        alert("결제를 실행합니다.");
+    }
+  </script>
+
 </head>
 
 <body>
-  <h2>선택된 지점: <span th:text="${selectedStore}">지점 이름</span></h2>
-  <br><br>
-  <a href="http://localhost:8112/customerOrdering/stores">지점 선택</a>
+<h2>선택된 지점: <span th:text="${selectedStore}">지점 이름</span></h2>
+<br><br>
+<a href="http://localhost:8112/customerOrdering/stores">지점 선택</a>
 
-  <form th:action="@{/customerOrdering/cart/set}" method="post">
-    <h2>세트메뉴</h2>
-    <div class="separator"></div>
+<form th:action="@{/customerOrdering/cart/set}" method="post">
+  <h2>세트메뉴</h2>
 
-    <label>버거:</label>
-    <select name="burgerName" required>
-      <option th:each="menu : ${allMenus}" th:if="${menu.category == '버거'}" th:value="${menu.menuName}"
-        th:text="${menu.menuName}"></option>
-    </select>
-    <input type="hidden" th:each="menu : ${allMenus}" th:if="${menu.category == '버거'}" th:value="${menu.price}"
-      name="burgerPrice" />
+  <label>버거:</label>
+  <select name="burgerName" required>
+    <option th:each="menu : ${allMenus}" th:if="${menu.category == '버거'}" th:value="${menu.menuName}"
+            th:text="${menu.menuName}"></option>
+  </select>
+  <input type="hidden" th:each="menu : ${allMenus}" th:if="${menu.category == '버거'}" th:value="${menu.price}"
+         name="burgerPrice" />
 
-    <br><label>사이드:</label>
-    <select name="sideName" required>
-      <option th:each="menu : ${allMenus}" th:if="${menu.category == '사이드'}" th:value="${menu.menuName}"
-        th:text="${menu.menuName}"></option>
-    </select>
-    <input type="hidden" th:each="menu : ${allMenus}" th:if="${menu.category == '사이드'}" th:value="${menu.price}"
-      name="sidePrice" />
+  <br><label>사이드:</label>
+  <select name="sideName" required>
+    <option th:each="menu : ${allMenus}" th:if="${menu.category == '사이드'}" th:value="${menu.menuName}"
+            th:text="${menu.menuName}"></option>
+  </select>
+  <input type="hidden" th:each="menu : ${allMenus}" th:if="${menu.category == '사이드'}" th:value="${menu.price}"
+         name="sidePrice" />
 
-    <br><label>음료:</label>
-    <select name="drinkName" required>
-      <option th:each="menu : ${allMenus}" th:if="${menu.category == '음료'}" th:value="${menu.menuName}"
-        th:text="${menu.menuName}"></option>
-    </select>
-    <input type="hidden" th:each="menu : ${allMenus}" th:if="${menu.category == '음료'}" th:value="${menu.price}"
-      name="drinkPrice" />
+  <br><label>음료:</label>
+  <select name="drinkName" required>
+    <option th:each="menu : ${allMenus}" th:if="${menu.category == '음료'}" th:value="${menu.menuName}"
+            th:text="${menu.menuName}"></option>
+  </select>
+  <input type="hidden" th:each="menu : ${allMenus}" th:if="${menu.category == '음료'}" th:value="${menu.price}"
+         name="drinkPrice" />
 
-    <br>
-    <h3>세트 수량:</h3>
-    <label>세트 수량:</label>
-    <input type="number" name="setCount" value="1" min="1" required />
+  <br>
+  <h3>세트 수량:</h3>
+  <label>세트 수량:</label>
+  <input type="number" name="setCount" value="1" min="1" required />
 
-    <button type="submit">장바구니에 담기</button>
-  </form>
+  <button type="submit">장바구니에 담기</button>
+</form>
 
-  <div class="menu">
-    <h2>버거</h2>
-    <div class="separator"></div>
-    <ul style="display: flex; flex-direction: column; align-items: center;">
-      <li th:each="menu : ${allMenus}" th:if="${menu.category == '버거'}">
-        <span th:text="${menu.menuName}">버거 이름</span> -
-        <span th:text="${menu.price}">가격</span> 원
-        <span th:text="${menu.descr}">설명</span>
-        <form th:action="@{/customerOrdering/cart/single}" method="post">
-          <input type="hidden" th:value="${menu.menuName}" name="menuName" />
-          <input type="hidden" th:value="${menu.price}" name="menuPrice" />
-          <input type="number" name="count" value="1" min="1" th:max="${menu.stock}" required />
-          <button type="submit">장바구니에 담기</button>
-        </form>
-      </li>
-    </ul>
+<div class="menu">
+  <h2>버거</h2>
+  <ul>
+    <li th:each="menu : ${allMenus}" th:if="${menu.category == '버거'}">
+      <span th:text="${menu.menuName}">버거 이름</span> -
+      <span th:text="${menu.price}">가격</span> 원
+      <span th:text="${menu.descr}">설명</span>
+      <form th:action="@{/customerOrdering/cart/single}" method="post">
+        <input type="hidden" th:value="${menu.menuName}" name="menuName" />
+        <input type="hidden" th:value="${menu.price}" name="menuPrice" />
+        <input type="number" name="count" value="1" min="1" th:max="${menu.stock}" required />
+        <button type="submit">장바구니에 담기</button>
+      </form>
+    </li>
+  </ul>
 
-    <h2>사이드</h2>
-    <div class="separator"></div>
-    <ul style="display: flex; flex-direction: column; align-items: center;">
-      <li th:each="menu : ${allMenus}" th:if="${menu.category == '사이드'}">
-        <span th:text="${menu.menuName}">사이드 이름</span> -
-        <span th:text="${menu.price}">가격</span> 원
-        <span th:text="${menu.descr}">설명</span>
-        <form th:action="@{/customerOrdering/cart/single}" method="post">
-          <input type="hidden" th:value="${menu.menuName}" name="menuName" />
-          <input type="hidden" th:value="${menu.price}" name="menuPrice" />
-          <input type="number" name="count" value="1" min="1" th:max="${menu.stock}" required />
-          <button type="submit">장바구니에 담기</button>
-        </form>
-      </li>
-    </ul>
+  <h2>사이드</h2>
+  <ul>
+    <li th:each="menu : ${allMenus}" th:if="${menu.category == '사이드'}">
+      <span th:text="${menu.menuName}">사이드 이름</span> -
+      <span th:text="${menu.price}">가격</span> 원
+      <span th:text="${menu.descr}">설명</span>
+      <form th:action="@{/customerOrdering/cart/single}" method="post">
+        <input type="hidden" th:value="${menu.menuName}" name="menuName" />
+        <input type="hidden" th:value="${menu.price}" name="menuPrice" />
+        <input type="number" name="count" value="1" min="1" th:max="${menu.stock}" required />
+        <button type="submit">장바구니에 담기</button>
+      </form>
+    </li>
+  </ul>
 
-    <h2>음료</h2>
-    <div class="separator"></div>
-    <ul style="display: flex; flex-direction: column; align-items: center;">
-      <li th:each="menu : ${allMenus}" th:if="${menu.category == '음료'}">
-        <span th:text="${menu.menuName}">음료 이름</span> -
-        <span th:text="${menu.price}">가격</span> 원
-        <span th:text="${menu.descr}">설명</span>
-        <form th:action="@{/customerOrdering/cart/single}" method="post">
-          <input type="hidden" th:value="${menu.menuName}" name="menuName" />
-          <input type="hidden" th:value="${menu.price}" name="menuPrice" />
-          <input type="number" name="count" value="1" min="1" th:max="${menu.stock}" required />
-          <button type="submit">장바구니에 담기</button>
-        </form>
-      </li>
-    </ul>
-  </div>
+  <h2>음료</h2>
+  <ul>
+    <li th:each="menu : ${allMenus}" th:if="${menu.category == '음료'}">
+      <span th:text="${menu.menuName}">음료 이름</span> -
+      <span th:text="${menu.price}">가격</span> 원
+      <span th:text="${menu.descr}">설명</span>
+      <form th:action="@{/customerOrdering/cart/single}" method="post">
+        <input type="hidden" th:value="${menu.menuName}" name="menuName" />
+        <input type="hidden" th:value="${menu.price}" name="menuPrice" />
+        <input type="number" name="count" value="1" min="1" th:max="${menu.stock}" required />
+        <button type="submit">장바구니에 담기</button>
+      </form>
+    </li>
+  </ul>
+</div>
 
-  <div class="cart">
-    <h1>장바구니</h1>
+<div class="cart">
+  <h1>장바구니</h1>
 
-    <h2>세트 메뉴</h2>
-    <div class="separator"></div>
-    <ul>
-      <li th:each="setMenu : ${setCart}">
-        <span th:text="${setMenu.burger.name}">버거 이름</span> +
-        <span th:text="${setMenu.side.name}">사이드 이름</span> +
-        <span th:text="${setMenu.drink.name}">음료 이름</span> -
-        <span th:text="${setMenu.price}">가격</span> 원 -
-        <span th:text="${setMenu.count}">수량</span> 개
+  <h2>세트 메뉴</h2>
+  <ul>
+    <li th:each="setMenu : ${setCart}">
+      <span th:text="${setMenu.burger.name}">버거 이름</span> +
+      <span th:text="${setMenu.side.name}">사이드 이름</span> +
+      <span th:text="${setMenu.drink.name}">음료 이름</span> -
+      <span th:text="${setMenu.price}">가격</span> 원 -
+      <span th:text="${setMenu.count}">수량</span> 개
 
-        <form th:action="@{/customerOrdering/cart/updateSet}" method="post" style="display:inline;">
-          <input type="hidden" th:value="${setMenu.burger.name}" name="burgerName" />
-          <input type="hidden" th:value="${setMenu.side.name}" name="sideName" />
-          <input type="hidden" th:value="${setMenu.drink.name}" name="drinkName" />
-          <input type="number" name="newCount" th:value="${setMenu.count}" min="1" required />
-          <button type="submit">수량 변경</button>
-        </form>
-
-        <form th:action="@{/customerOrdering/cart/removeSet}" method="post" style="display:inline;">
-          <input type="hidden" th:value="${setMenu.burger.name}" name="burgerName" />
-          <input type="hidden" th:value="${setMenu.side.name}" name="sideName" />
-          <input type="hidden" th:value="${setMenu.drink.name}" name="drinkName" />
-          <button type="submit">삭제</button>
-        </form>
-      </li>
-    </ul>
-
-    <h2>단일 메뉴</h2>
-    <div class="separator"></div>
-    <ul>
-      <li th:each="singleMenu : ${singleCart}">
-        <span th:text="${singleMenu.name}">메뉴 이름</span> -
-        <span th:text="${singleMenu.price}">가격</span> 원 -
-        <span th:text="${singleMenu.count}">수량</span> 개
-
-        <form th:action="@{/customerOrdering/cart/updateSingle}" method="post" style="display:inline;">
-          <input type="hidden" th:value="${singleMenu.name}" name="menuName" />
-          <input type="number" name="newCount" th:value="${singleMenu.count}" min="1" required />
-          <button type="submit">수량 변경</button>
-        </form>
-
-        <form th:action="@{/customerOrdering/cart/removeSingle}" method="post" style="display:inline;">
-          <input type="hidden" th:value="${singleMenu.name}" name="menuName" />
-          <button type="submit">삭제</button>
-        </form>
-      </li>
-    </ul>
-
-    <h3>총 합계: <span th:text="${totalPrice}" name="totalPrice">0</span> 원</h3>
-
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-      <form th:action="@{/customerOrdering/checkout}" method="post" onsubmit="showAlert()">
-        <button type="submit">결제하기</button>
+      <form th:action="@{/customerOrdering/cart/updateSet}" method="post" style="display:inline;">
+        <input type="hidden" th:value="${setMenu.burger.name}" name="burgerName" />
+        <input type="hidden" th:value="${setMenu.side.name}" name="sideName" />
+        <input type="hidden" th:value="${setMenu.drink.name}" name="drinkName" />
+        <input type="number" name="newCount" th:value="${setMenu.count}" min="1" required />
+        <button type="submit">수량 변경</button>
       </form>
 
-      <!-- 재고 부족 메시지 표시 -->
-      <div th:if="${stockCheckMsg}" style="color: red; margin-left: 20px;">
-        <span th:text="${stockCheckMsg}">재고 부족</span>
-      </div>
+      <form th:action="@{/customerOrdering/cart/removeSet}" method="post" style="display:inline;">
+        <input type="hidden" th:value="${setMenu.burger.name}" name="burgerName" />
+        <input type="hidden" th:value="${setMenu.side.name}" name="sideName" />
+        <input type="hidden" th:value="${setMenu.drink.name}" name="drinkName" />
+        <button type="submit">삭제</button>
+      </form>
+    </li>
+  </ul>
+
+  <h2>단일 메뉴</h2>
+  <ul>
+    <li th:each="singleMenu : ${singleCart}">
+      <span th:text="${singleMenu.name}">메뉴 이름</span> -
+      <span th:text="${singleMenu.price}">가격</span> 원 -
+      <span th:text="${singleMenu.count}">수량</span> 개
+
+      <form th:action="@{/customerOrdering/cart/updateSingle}" method="post" style="display:inline;">
+        <input type="hidden" th:value="${singleMenu.name}" name="menuName" />
+        <input type="number" name="newCount" th:value="${singleMenu.count}" min="1" required />
+        <button type="submit">수량 변경</button>
+      </form>
+
+      <form th:action="@{/customerOrdering/cart/removeSingle}" method="post" style="display:inline;">
+        <input type="hidden" th:value="${singleMenu.name}" name="menuName" />
+        <button type="submit">삭제</button>
+      </form>
+    </li>
+  </ul>
+
+  <h3>총 합계: <span th:text="${totalPrice}" name="totalPrice">0</span> 원</h3>
+
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <form th:action="@{/customerOrdering/checkout}" method="post" onsubmit="showAlert()">
+      <button type="submit">결제하기</button>
+    </form>
+
+    <!-- 재고 부족 메시지 표시 -->
+    <div th:if="${stockCheckMsg}" style="color: red; margin-left: 10px;">
+      <p th:text="${stockCheckMsg}"></p>
     </div>
   </div>
+</div>
+
+
 </body>
 
 </html>
