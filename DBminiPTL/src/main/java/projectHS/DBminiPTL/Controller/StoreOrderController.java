@@ -14,6 +14,7 @@ import projectHS.DBminiPTL.DAO.InvDAO;
 import projectHS.DBminiPTL.VO.InvVO;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -88,18 +89,26 @@ public class StoreOrderController {
         int capital = invDAO.capitalCheck(Session.storeId);
         int totalPrice = invDAO.getTotalPriceStore();
 
-        List<InvVO> stockCheck = invDAO.stockCheck(Session.storeId);
 
         List<String> existMenu = invDAO.isMenuExist(Session.storeId);
         List<SingleMenu> newThing = new ArrayList<>();
 
-        for(SingleMenu e:invDAO.getStoreCart()){
-            for(String s:existMenu){
-                if(e.getName().equals(s)){
-                    newThing.add(e);
-                    invDAO.getStoreCart().remove(e);
-                    break;
+        Iterator<SingleMenu> iterator = invDAO.getStoreCart().iterator();
+        while (iterator.hasNext()) {
+            SingleMenu e = iterator.next();
+            boolean exists = false; // 메뉴가 존재하는지 여부를 추적하는 플래그
+
+            for (String s : existMenu) {
+                if (e.getName().equals(s)) {
+                    exists = true; // 이름이 existMenu에 존재함
+                    break; // inner loop 종료
                 }
+            }
+
+            if (!exists) {
+                newThing.add(e); // 존재하지 않으면 newThing에 추가
+                System.out.println(e.getName() + " 신메뉴");
+                iterator.remove(); // 안전하게 storeCart에서 제거
             }
         }
 
@@ -110,7 +119,7 @@ public class StoreOrderController {
         }
 
         try {
-            if(!newThing.isEmpty()){
+            if (!newThing.isEmpty()) {
                 invDAO.addInventory(Session.storeId, newThing);
             }
             // 재고 업데이트 및 자본금 감소
