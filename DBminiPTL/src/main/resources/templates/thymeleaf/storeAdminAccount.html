@@ -1,59 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>계좌 메뉴</title>
-  <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        margin: 0;
-        padding: 20px;
-    }
-    h1 {
-        text-align: center;
-        color: #333;
-    }
-    .menu {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 20px;
-    }
-    .menu button {
-        background-color: #007BFF;
-        color: white;
-        border: none;
-        padding: 15px 20px;
-        margin: 10px;
-        cursor: pointer;
-        border-radius: 5px;
-        font-size: 16px;
-        width: 200px;
-    }
-    .menu button:hover {
-        background-color: #0056b3;
-    }
-  </style>
+  <link rel="stylesheet" href="/css/style.css"> <!-- Make sure the path is correct -->
 </head>
+
 <body>
-<h1>계좌 메뉴</h1>
-<div class="menu">
-  <div class="menu-item">
-    <a href="/main/admin/account/cpCharge">
-      <button>[1] 계좌 송금</button>
-    </a>
+  <h1>계좌 메뉴</h1>
+  <div class="menu">
+    <div class="menu-item">
+      <a href="/main/admin/account/cpCharge">
+        <button>[1] 계좌 송금</button>
+      </a>
+    </div>
+    <div class="menu-item">
+      <a href="/main/admin/account/cpSearch">
+        <button>[2] 계좌 잔액 조회</button>
+      </a>
+    </div>
+    <div class="menu-item">
+      <a href="/main/admin">
+        <button>[3] 뒤로가기</button>
+      </a> <!-- Added closing anchor tag -->
+    </div>
   </div>
-  <div class="menu-item">
-    <a href="/main/admin/account/cpSearch">
-      <button>[2] 계좌 잔액 조회</button>
-    </a>
-  </div>
-  <div class="menu-item">
-    <a href="/main/admin">
-      <button>[3] 뒤로가기</button>
-  </div>
-</div>
 </body>
+
 </html>

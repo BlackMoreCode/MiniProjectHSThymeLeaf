@@ -10,20 +10,6 @@ h1 {
   color: #333;
 }
 
-form {
-  max-width: 450px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  background-color: #f9f9f9;
-}
-
-label {
-  display: block;
-  margin-bottom: 8px;
-}
-
 .menu {
   display: flex;
   flex-direction: column;
@@ -31,22 +17,26 @@ label {
   margin-top: 20px;
 }
 
-.menu button {
-  background-color: #007BFF;
-  color: white;
+/* Consolidated button styles */
+button {
+  padding: 15px 20px; /* Use padding that matches your design */
   border: none;
-  padding: 15px 20px;
-  margin: 10px;
-  cursor: pointer;
+  background-color: #007BFF; /* Primary button color */
+  color: white;
   border-radius: 5px;
+  cursor: pointer;
+  margin: 10px; /* Adds spacing around buttons */
   font-size: 16px;
-  width: 200px;
+  width: 200px; /* Fixed width for consistency */
+  display: inline-block; /* Ensure it sizes according to its content */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
 }
 
-.menu button:hover {
-  background-color: #0056b3;
+button:hover {
+  background-color: #0056b3; /* Adjust hover color */
 }
 
+/* Input styles */
 input {
   width: 100%;
   padding: 10px;
@@ -55,17 +45,7 @@ input {
   border-radius: 5px;
 }
 
-button {
-  padding: 10px 10px;
-  border: none;
-  background-color: #5cb85c;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 10px 0; /* Adds some vertical spacing around the button */
-  display: inline-block; /* Allows the button to take only the necessary width */
-}
-
+/* Specific styles for the back button, if needed */
 .back-button {
   padding: 10px 20px; /* Specific padding for the back button */
   background-color: #5cb85c; /* Same background color */
@@ -76,11 +56,7 @@ button {
   display: inline-block; /* Size based on content */
 }
 
-button:hover {
-  background-color: #4cae4c;
-}
-
-/* 영수증/주문내역 관련 css */
+/* Receipt related styles */
 .receipt-container {
   max-width: 800px;
   margin: 0 auto;
@@ -103,3 +79,42 @@ button:hover {
   margin: 5px 0;
   color: #555;
 }
+
+.form-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* form 관련 CSS */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  -moz-appearance: textfield;
+  /* Firefox에서 스피너 제거 */
+}
+
+.form-group input::-webkit-outer-spin-button,
+/* Chrome, Safari, Edge */
+.form-group input::-webkit-inner-spin-button {
+  /* Chrome, Safari, Edge */
+  -webkit-appearance: none;
+  /* 스피너 제거 */
+  margin: 0;
+  /* 기본 여백 제거 */
+}
+
