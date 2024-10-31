@@ -44,10 +44,7 @@ public class Order_RecordDAO {
 
         // Sort by store name and then by order time
         vo.sort((o1, o2) -> {
-            if (!o1.getStoreId().equals(o2.getStoreId())) {
-                return o1.getStoreId().compareTo(o2.getStoreId());
-            }
-            return o1.getOrderTime().compareTo(o2.getOrderTime());
+            return o2.getOrderTime().compareTo(o1.getOrderTime());
         });
 
         return vo;
