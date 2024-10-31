@@ -322,7 +322,7 @@
         <div class="cart"><br><br><br>
           <h1>🛒재고 발주 장바구니</h1><br><br>
 
-          <h2>세트 메뉴</h2>
+          <!-- <h2>세트 메뉴</h2> -->
           <ul>
             <li th:each="cart : ${cart}">
               <span th:text="${cart.name}">메뉴 이름</span> -
@@ -335,7 +335,7 @@
                 <button type="submit">수량 변경</button>
               </form>
 
-              <form th:action="@{/main/admin/cart/removeSet}" method="post" style="display:inline;">
+              <form th:action="@{/main/admin/cartRemove}" method="post" style="display:inline;">
                 <input type="hidden" th:value="${cart.name}" name="menuName" />
                 <button type="submit">삭제</button>
               </form>
