@@ -2,70 +2,79 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <title>Title</title>
   <meta charset="UTF-8">
+  <title>BURGERZIP ADMIN CAPITAL CHARGE</title>
+  <link rel="stylesheet" th:href="@{/css/style_admin.css}">
+  <!--
   <style>
     h1 {
-      text-align: center;
+    text-align: center;
     }
-
     .success {
-      color: green;
-      font-weight: bold;
-      font-size: 16px;
-      /* 성공 메시지 크기 */
+    color: green;
+    font-weight: bold;
+     font-size: 16px; /* 성공 메시지 크기 */
     }
-
     .failure {
-      color: red;
-      font-weight: bold;
-      font-size: 16px;
-      /* 실패 메시지 크기 */
+    color: red;
+    font-weight: bold;
+     font-size: 16px; /* 실패 메시지 크기 */
     }
-
     .button-container {
-      text-align: center;
-      /* 버튼 중앙 정렬 */
-      margin-top: 20px;
-      /* 버튼과 메시지 사이에 여백 추가 */
+      text-align: center; /* 버튼 중앙 정렬 */
+      margin-top: 20px;  /* 버튼과 메시지 사이에 여백 추가 */
     }
-
     .button-container button {
-      background-color: #007BFF;
-      color: white;
-      border: none;
-      padding: 15px 20px;
-      margin: 10px;
-      cursor: pointer;
-      border-radius: 5px;
-      font-size: 14px;
-      width: 200px;
+    background-color: #007BFF;
+        color: white;
+        border: none;
+        padding: 15px 20px;
+        margin: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 14px;
+        width: 200px;
     }
   </style>
+  -->
 </head>
 
 <body>
-  <h1>계좌 송금 결과</h1>
+  <div id="wrap_admin_sales">
+    <div id="area_admin_sales">
+      <div id="header">
+        <img
+          src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F64Fyi%2FbtsKopBV7f8%2FV9c159yoKN4R6s0C6HV2i0%2Fimg.png"
+          width="100" />
+        <br>
+        <h3>버거집 ADMIN 계좌 송금🍔</h3>
+        <p>안녕하세요 관리자님,</p>
+        <p>여기는 매장 계좌 송금 결과 페이지입니다.</p><br>
+      </div>
 
-  <!-- Success Message -->
-  <div th:if="${isSuccess}" style="text-align: center;" class="success">
-    계좌 송금 완료
-  </div>
+      <br><br><br><br><br><br>
 
-  <!-- Failure Message -->
-  <div th:if="${!isSuccess}" style="text-align: center;" class="failure">
-    계좌 송금 실패
-  </div>
+      <h1>계좌 송금 결과</h1>
 
-  <!-- Button Container -->
-  <div class="button-container">
-    <a href="/main/admin/account">
-      <button>
-        <span style="display: block;"> 계좌 메뉴 </span> <!-- 첫 번째 줄 -->
-        <span style="display: block;"> 화면으로 이동 </span> <!-- 두 번째 줄 -->
-      </button>
-    </a>
-  </div>
+      <!-- Success Message -->
+      <div th:if="${isSuccess}" style="text-align: center;" class="success">
+        계좌 송금 완료
+      </div>
+
+      <!-- Failure Message -->
+      <div th:if="${!isSuccess}" style="text-align: center;" class="failure">
+        계좌 송금 실패
+      </div>
+
+      <!-- Button Container -->
+      <div class="button-container">
+        <a href="/main/admin/account">
+          <button>
+            <span style="display: block;"> 계좌 메뉴 </span> <!-- 첫 번째 줄 -->
+            <span style="display: block;"> 화면으로 이동 </span> <!-- 두 번째 줄 -->
+          </button>
+        </a>
+      </div>
 </body>
 
 </html>
