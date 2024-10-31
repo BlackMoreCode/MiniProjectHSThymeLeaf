@@ -39,6 +39,16 @@
     </div>
   </div>
   </div>
+
+  <!-- 클라이언트 사이드 자바스크립트 alert블록. 로그인 실패시에만 뜨게 수정 -->
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+    const alertMessage = /*[[${alertMessage}]]*/ '';
+    if (alertMessage) {
+      alert(alertMessage);
+    }
+    /*]]>*/
+  </script>
 </body>
 
 </html>

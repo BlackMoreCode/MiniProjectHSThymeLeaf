@@ -24,6 +24,15 @@ body {
   background-color: #ffffff;
 }
 
+#wrap_admin_order {
+  width: 800px;
+  min-width: 400px;
+  height: 1000px;
+  margin: 100px auto 100px;
+  background-color: #ffffff;
+  text-align: center;
+}
+
 #area_admin_main {
   width: 800px;
   background-color: #ffffff;
@@ -87,6 +96,24 @@ body {
   display: block;
   font-size: 18px;
   font-weight: bold;
+}
+
+/* submit 파생버튼 */
+.styled-button {
+  width: 80%; /* Adjust to fit your layout */
+  height: 60px;
+  color: #ffffff; /* Text color */
+  background: #000000; /* Background color */
+  text-align: center;
+  border: none; /* Remove border */
+  font-size: 18px; /* Font size */
+  font-weight: bold; /* Font weight */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+/* Optional: Add hover effects */
+.styled-button:hover {
+  background: #444444; /* Change background color on hover */
 }
 
 .sub_button {
@@ -200,4 +227,195 @@ td .sub_button2 {
   box-sizing: border-box;
   border: 1px solid #cccccc;
   margin-bottom: 10px;
+}
+
+cart .sub_button3 {
+  display: flex;
+  justify-content: center;
+  /* 버튼 가로 중앙 정렬 */
+  width: auto;
+  height: 30px;
+  color: #ffffff !important;
+  background: #000000 !important;
+  border: 1px solid #000;
+  text-align: center;
+  display: inline;
+  font-size: 12px;
+  margin: 0 5px;
+}
+
+.menu,
+.cart {
+  width: 80%;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.menu {
+  border-right: 1px solid #ccc;
+  margin: auto auto 10px;
+  padding: 50px 0 0;
+  text-align: center;
+
+}
+
+.menu table {
+  margin: 0 auto;
+}
+
+.menu .input {
+  width: 2000px;
+  height: 30px;
+  padding: 5px 5px 5px;
+  box-sizing: border-box;
+  border: 1px solid #cccccc;
+  margin-bottom: 10px;
+}
+
+.menu .inputcnt {
+  width: 50px;
+  height: 30px;
+  padding: 5px 5px 5px;
+  box-sizing: border-box;
+  border: 1px solid #cccccc;
+  margin-bottom: 10px;
+}
+
+menu .sub_button3 {
+  display: flex;
+  justify-content: center;
+  /* 버튼 가로 중앙 정렬 */
+  width: auto;
+  height: 30px;
+  color: #ffffff !important;
+  background: #000000 !important;
+  border: 1px solid #000;
+  text-align: center;
+  display: inline;
+  font-size: 12px;
+  margin: 0 5px;
+}
+
+#input_box_invStatus {
+  width: 90%;
+  margin: auto;
+  padding: 5px 0 0;
+  text-align: center;
+}
+
+#input_box_invStatus .input {
+  width: 30%;
+  height: 30px;
+  padding: 5px 5px 5px;
+  box-sizing: border-box;
+  border: 1px solid #cccccc;
+  margin-bottom: 10px;
+}
+
+#input_box_invStatus .inputcnt {
+  width: 50px;
+  height: 30px;
+  padding: 5px 5px 5px;
+  box-sizing: border-box;
+  border: 1px solid #cccccc;
+  margin-bottom: 10px;
+}
+
+
+#input_box_invOrder {
+  width: 90%;
+  margin: auto;
+  padding: 5px 0 0;
+  text-align: center;
+}
+
+#input_box_invOrder .input {
+  width: 30%;
+  height: 30px;
+  padding: 5px 5px 5px;
+  box-sizing: border-box;
+  border: 1px solid #cccccc;
+  margin-bottom: 10px;
+}
+
+#input_box_invOrder .inputcnt {
+  width: 50px;
+  height: 30px;
+  padding: 5px 5px 5px;
+  box-sizing: border-box;
+  border: 1px solid #cccccc;
+  margin-bottom: 10px;
+}
+
+.submit_order {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0 10px;
+
+}
+
+.submit_order>input {
+  width: 80%;
+  height: 60px;
+  color: #ffffff !important;
+  background: #000000 !important;
+  text-align: center;
+  border: none;
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.submit_order>button {
+  width: 100% !important;
+  height: 60px;
+  color: #ffffff !important;
+  background: #000000 !important;
+  text-align: center;
+  border: 1px #000000;
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+
+#input_box_invOrder_cart {
+  width: 90%;
+  margin: auto;
+  padding: 5px 0 0;
+  text-align: center;
+}
+
+#input_box_invOrder_cart .inputcnt {
+  width: 50px;
+  height: 20px;
+  padding: 5px 5px 5px;
+  box-sizing: border-box;
+  border: 1px solid #cccccc;
+  margin-bottom: 10px;
+}
+
+
+#input_box_invOrder_cart .sub_button3 {
+  width: 50px;
+  height: 30px;
+  color: #ffffff;
+  background: #000000;
+  border: 1px solid #000;
+  text-align: center;
+  display: inline;
+  font-size: 12px;
+  margin: 0 5px;
+}
+
+.centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* 수직 가운데 정렬 */
+  justify-content: center;
+  /* 수평 가운데 정렬 */
+  text-align: center;
+  /* 텍스트 가운데 정렬 */
 }

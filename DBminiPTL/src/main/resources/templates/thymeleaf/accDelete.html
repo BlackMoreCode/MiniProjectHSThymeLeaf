@@ -7,7 +7,6 @@
   <link rel="stylesheet" th:href="@{/css/style_customer.css}">
 </head>
 
-
 <body>
   <div id="wrap_customer_mypage">
     <div id="area">
@@ -19,17 +18,21 @@
         <h3>버거집 CUSTOMER 회원 계정 삭제🍔</h3>
         <p>안녕하세요 고객님,</p>
         <p>여기서 회원님의 계정을 삭제하실 수 있습니다.</p><br>
+        <br><br><br>
+        <p>정말로 계정을 삭제하시겠습니까? 이는 되돌릴 수 없습니다.</p>
       </div>
 
-      <br><br><br><br><br><br>
+      <br><br><br>
 
       <form action="/main/customer/myPage/accInfoDelete" method="post">
-        <p>정말로 계정을 삭제하시겠습니까? 이는 되돌릴 수 없습니다.</p>
         <input type="hidden" name="userId" th:value="${accInfoVO.userId}" />
-        <input type="submit" value="계정 삭제" />
-      </form>
 
-      <button onclick="location.href='/main'">취소</button>
+        <span class="submit"><input type="submit" value="계정 삭제" onclick="window.location.href='/main';" /></span>
+        <span class="submit"><input type="button" value="취소"
+            onclick="window.location.href='/main/customer/myPage';" /></span>
+      </form>
+    </div>
+  </div>
 </body>
 
 </html>

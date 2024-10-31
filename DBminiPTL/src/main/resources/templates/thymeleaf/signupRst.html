@@ -5,21 +5,28 @@
   <meta charset="UTF-8">
   <title>BURGERZIP SIGNUP RESULT</title>
   <link rel="stylesheet" th:href="@{/css/style_main.css}">
-  <style>
-    .success {
-      color: green;
-      font-weight: bold;
-    }
-
-    .failure {
-      color: red;
-      font-weight: bold;
-    }
-  </style>
 </head>
+<style>
+  .success {
+    color: green;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 20px 0;
+    text-align: center;
+    /* 중앙 정렬 추가 */
+  }
+
+  .failure {
+    color: red;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 20px 0;
+    text-align: center;
+    /* 중앙 정렬 추가 */
+  }
+</style>
 
 <body>
-
   <div id="wrap_signup">
     <div id="area">
       <div id="header">
@@ -30,27 +37,26 @@
         <h3>버거집 회원가입 결과🍔</h3>
         <p>안녕하세요 고객님, 버거집입니다.</p>
         <p>버거집 회원가입 결과 페이지입니다.</p>
+
+        <br><br>
+
+        <!-- Success Message -->
+        <div th:if="${isSuccess}" class="success">
+          회원가입 성공
+        </div>
+
+        <!-- Failure Message -->
+        <div th:if="${!isSuccess}" class="failure">
+          회원가입 실패
+        </div>
       </div>
 
-      <br><br><br><br><br><br>
+      <br><br><br><br><br><br><br>
 
-      <!-- Success Message -->
-      <div th:if="${isSuccess}" class="success">
-        회원가입 성공
-      </div>
-
-      <!-- Failure Message -->
-      <div th:if="${!isSuccess}" class="failure">
-        회원가입 실패
-      </div>
-
-      <input type="button" value="재작성 하기" onclick="history.go(-1);" />
-      <form action="/main" method="get">
-        <button type="submit">로그인 페이지</button>
-      </form>
-
-
-
+      <span class="submit"><input type="button" value="재작성 하기" onclick="history.go(-1);" /></span>
+      <span class="submit"><input type="button" value="로그인 페이지" onclick="window.location.href='/main';" /></span>
+    </div>
+  </div>
 </body>
 
 </html>
