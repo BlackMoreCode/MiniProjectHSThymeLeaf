@@ -16,7 +16,7 @@ body {
   background-color: #f1f1f1;
 }
 
-#wrap_hq_main {
+#wrap_admin_main {
   width: 800px;
   min-width: 400px;
   height: 500px;
@@ -24,18 +24,28 @@ body {
   background-color: #ffffff;
 }
 
-#wrap_hq_InvMngr {
-  width: 800px;
-  min-width: 400px;
-  height: 1000px;
-  margin: 100px auto 100px;
-  background-color: #ffffff;
-}
-
-#area {
+#area_admin_main {
   width: 800px;
   background-color: #ffffff;
   margin: 0 auto 100px;
+  padding: auto auto 100px;
+  position: relative;
+}
+
+#wrap_admin_sales {
+  width: 800px;
+  min-width: 400px;
+  height: 500px;
+  margin: 100px auto 100px;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+#area_admin_sales {
+  width: 800px;
+  background-color: #ffffff;
+  margin: 0 auto 100px;
+  padding: auto auto 100px;
   position: relative;
 }
 
@@ -52,54 +62,6 @@ body {
   padding: 60px 0 100px;
   margin-bottom: 50px;
   text-align: center;
-}
-
-#input_box_hq_main {
-  width: 80%;
-  margin: auto;
-  padding: 50px 0 0;
-  text-align: center;
-}
-
-#input_box_hq_main .input {
-  width: 80%;
-  height: 50px;
-  padding: 15px 10px 14px;
-  box-sizing: border-box;
-  border: 1px solid #cccccc;
-  margin-bottom: 10px;
-}
-
-#input_box_hq_InvMngr {
-  width: 80%;
-  margin: auto;
-  padding: 50px 0 0;
-  text-align: center;
-}
-
-#input_box_hq_InvMngr .input {
-  width: 80%;
-  height: 50px;
-  padding: 15px 10px 14px;
-  box-sizing: border-box;
-  border: 1px solid #cccccc;
-  margin-bottom: 10px;
-}
-
-#input_box_hq_InvMngr_Edit {
-  width: 90%;
-  margin: auto;
-  padding: 5px 0 0;
-  text-align: center;
-}
-
-#input_box_hq_InvMngr_Edit .input {
-  width: 80%;
-  height: 30px;
-  padding: 5px 5px 5px;
-  box-sizing: border-box;
-  border: 1px solid #cccccc;
-  margin-bottom: 10px;
 }
 
 .checkbox {
@@ -223,4 +185,19 @@ td .sub_button2 {
   display: flex;
   justify-content: center;
   /* 버튼 가로 중앙 정렬 */
+}
+
+#input_box_AcctCharge {
+  width: 40%;
+  margin: 0 auto;
+  padding: 30px 0 0;
+}
+
+#input_box_AcctCharge .input {
+  width: 100%;
+  height: 50px;
+  padding: 15px 10px 14px;
+  box-sizing: border-box;
+  border: 1px solid #cccccc;
+  margin-bottom: 10px;
 }

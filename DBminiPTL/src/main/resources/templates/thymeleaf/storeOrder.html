@@ -138,7 +138,7 @@
     </div>
     <ul id="burgerMenu" class="menu-list" style="display: block;">
       <li th:each="item : ${products}" th:if="${item.category == '버거'}">
-        <form th:action="@{/main/admin/addToCart}" method="post">
+        <form th:action="@{/main/customer/addToCart}" method="post">
           <span th:text="${item.menuName}">상품 이름</span> -
           <span th:text="${item.price}">₩0</span> - <!-- 가격 표시 -->
           <input type="number" class="input-number" th:name="count" min="1" value="1" />
@@ -154,7 +154,7 @@
     </div>
     <ul id="sideMenu" class="menu-list" style="display: block;">
       <li th:each="item : ${products}" th:if="${item.category == '사이드'}">
-        <form th:action="@{/main/admin/addToCart}" method="post">
+        <form th:action="@{/main/customer/addToCart}" method="post">
           <span th:text="${item.menuName}">상품 이름</span> -
           <span th:text="${item.price}">₩0</span> - <!-- 가격 표시 -->
           <input type="number" class="input-number" th:name="count" min="1" value="1" />
@@ -170,7 +170,7 @@
     </div>
     <ul id="drinkMenu" class="menu-list" style="display: block;">
       <li th:each="item : ${products}" th:if="${item.category == '음료'}">
-        <form th:action="@{/main/admin/addToCart}" method="post">
+        <form th:action="@{/main/customer/addToCart}" method="post">
           <span th:text="${item.menuName}">상품 이름</span> -
           <span th:text="${item.price}">₩0</span> - <!-- 가격 표시 -->
           <input type="number" class="input-number" th:name="count" min="1" value="1" />
@@ -193,13 +193,13 @@
         <span th:text="${cart.price}">가격</span> 원 -
         <span th:text="${cart.count}">수량</span> 개
 
-        <form th:action="@{/main/admin/cartUpdate}" method="post" style="display:inline;">
+        <form th:action="@{/main/customer/cartUpdate}" method="post" style="display:inline;">
           <input type="hidden" th:value="${cart.name}" name="menuName" />
           <input type="number" name="newCount" th:value="${cart.count}" min="1" required />
           <button type="submit">수량 변경</button>
         </form>
 
-        <form th:action="@{/main/admin/cartRemove}" method="post" style="display:inline;">
+        <form th:action="@{/main/customer/cartRemove}" method="post" style="display:inline;">
           <input type="hidden" th:value="${cart.name}" name="menuName" />
           <button type="submit">삭제</button>
         </form>
@@ -210,7 +210,7 @@
     <div th:if="${overCapital}" style="color: red; margin-left: 10px;">
       <p th:text="${overCapital}"></p>
     </div>
-    <form th:action="@{/main/admin/storeCheckout}" method="post" onsubmit="showAlert()">
+    <form th:action="@{/main/customer/storeCheckout}" method="post" onsubmit="showAlert()">
       <button class="button" id="placeOrder">발주 실행</button>
     </form>
   </div>

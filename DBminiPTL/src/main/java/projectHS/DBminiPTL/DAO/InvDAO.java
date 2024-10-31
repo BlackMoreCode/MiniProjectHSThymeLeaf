@@ -400,7 +400,7 @@ public class InvDAO {
     }
 
     public void addInventory(String storeId, List<SingleMenu> newMenu) {
-        String sql = "INSERT INTO INV VALUES (?,?,?,?)";
+        String sql = "INSERT INTO INV VALUES (?,?,? + 1000,?)";
 
         jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
             @Override

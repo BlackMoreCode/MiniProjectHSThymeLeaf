@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http:/www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="UTF-8">
-  <title>CUSTOMER SIGNUP RESULT</title>
+  <title>BURGERZIP SIGNUP RESULT</title>
+  <link rel="stylesheet" th:href="@{/css/style_main.css}">
   <style>
     .success {
       color: green;
@@ -18,27 +19,35 @@
 </head>
 
 <body>
-  <h1>CUSTOMER SIGNUP RESULT</h1>
-  <div>
-    <h2>버거집입니다🍔</h2>
-    <p>안녕하세요, 고객님!</p>
-    <p>버거집 회원가입을 위한 페이지입니다.</p>
-  </div>
 
-  <!-- Success Message -->
-  <div th:if="${isSuccess}" class="success">
-    회원가입 성공
-  </div>
+  <div id="wrap_signup">
+    <div id="area">
+      <div id="header">
+        <img
+          src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F64Fyi%2FbtsKopBV7f8%2FV9c159yoKN4R6s0C6HV2i0%2Fimg.png"
+          width="100" />
+        <br>
+        <h3>버거집 회원가입 결과🍔</h3>
+        <p>안녕하세요 고객님, 버거집입니다.</p>
+        <p>버거집 회원가입 결과 페이지입니다.</p>
+      </div>
 
-  <!-- Failure Message -->
-  <div th:if="${!isSuccess}" class="failure">
-    회원가입 실패
-  </div>
+      <br><br><br><br><br><br>
 
-  <input type="button" value="재작성 하기" onclick="history.go(-1);" />
-  <form action="/main" method="get">
-    <button type="submit">로그인 페이지</button>
-  </form>
+      <!-- Success Message -->
+      <div th:if="${isSuccess}" class="success">
+        회원가입 성공
+      </div>
+
+      <!-- Failure Message -->
+      <div th:if="${!isSuccess}" class="failure">
+        회원가입 실패
+      </div>
+
+      <input type="button" value="재작성 하기" onclick="history.go(-1);" />
+      <form action="/main" method="get">
+        <button type="submit">로그인 페이지</button>
+      </form>
 
 
 

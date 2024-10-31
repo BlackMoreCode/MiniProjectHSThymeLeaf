@@ -2,25 +2,99 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <title>계좌 송금</title>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="/css/style.css">
+  <title>BURGERZIP ADMIN CAPITAL CHARGE</title>
+  <link rel="stylesheet" th:href="@{/css/style_admin.css}">
+  <!--
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+    }
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+    .form-container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    .form-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        -moz-appearance: textfield; /* Firefox에서 스피너 제거 */
+    }
+    .form-group input::-webkit-outer-spin-button, /* Chrome, Safari, Edge */
+    .form-group input::-webkit-inner-spin-button { /* Chrome, Safari, Edge */
+        -webkit-appearance: none; /* 스피너 제거 */
+        margin: 0; /* 기본 여백 제거 */
+    }
+    .menu {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+    }
+    .menu button {
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        padding: 15px 20px;
+        margin: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 16px;
+        width: 200px;
+    }
+    .menu button:hover {
+        background-color: #0056b3;
+    }
+  </style>
+  -->
 </head>
 
 <body>
-  <h1>계좌 송금</h1>
-  <div class="form-container">
-    <form th:action="@{/main/admin/account/cpCharge}" th:object="${capitalCg}" method="post">
-      <div class="form-group">
-        <label for="amount">송금 금액:</label>
-        <input type="number" id="amount" th:field="*{amount}" required placeholder="금액을 입력하세요" step="any" min="0"
-          pattern="\d*">
+  <div id="wrap_admin_sales">
+    <div id="area_admin_sales">
+      <div id="header">
+        <img
+          src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F64Fyi%2FbtsKopBV7f8%2FV9c159yoKN4R6s0C6HV2i0%2Fimg.png"
+          width="100" />
+        <br>
+        <h3>버거집 ADMIN 계좌 송금🍔</h3>
+        <p>안녕하세요 관리자님,</p>
+        <p>여기서 매장 계좌에 송금하실 수 있습니다.</p><br>
       </div>
-      <div class="menu">
-        <button type="submit">송금하기</button>
-        <button type="button" onclick="window.history.back()">뒤로가기</button>
+
+      <div id="input_box_AcctCharge">
+        <form th:action="@{/main/admin/account/cpCharge}" th:object="${capitalCg}" method="post">
+
+          <h1>송금할 금액</h1><br>
+          <input class="input" type="number" id="amount" th:field="*{amount}" required placeholder="계좌에 송금하실 금액을 입력하세요"
+            step="any" min="0" pattern="\d*">
+          <br><br><br>
+
+          <span class="submit"><input type="button" value="송금하기" /></span>
+          <span class="submit"><input type="button" value="뒤로가기" onclick="window.history.back()" /></span>
+          <br><br><br>
+        </form>
       </div>
-    </form>
+    </div>
   </div>
 </body>
 

@@ -9,33 +9,31 @@
 
 <body>
   <!-- Main container -->
-  <div id="wrap_main">
-
-    <!-- Header -->
-    <div id="header">
-      <h1>주문 내역</h1>
-    </div>
-
-    <!-- Receipt container -->
-    <div class="receipt-container">
-      <p th:if="${#lists.isEmpty(receipt)}">주문 내역이 없습니다.</p>
-
-      <div th:each="order : ${receipt}" class="receipt-card">
-        <h3>주문 번호: <span th:text="${order.orderCode}"></span></h3>
-        <p><strong>주문 항목:</strong> <br> <span th:utext="${order.orderList}"></span></p>
-        <p><strong>주문 시간:</strong> <span th:text="${order.orderTime}"></span></p>
-        <p><strong>총 금액:</strong> <span th:text="${order.orderPrice}"></span> 원</p>
-        <p><strong>지점:</strong> <span th:text="${order.storeId}"></span></p>
+  <div id="wrap_customer_main">
+    <div id="area">
+      <!-- Header -->
+      <div id="header">
+        <h1>주문 내역</h1>
       </div>
-      <hr>
-      <!-- Back button -->
-      <div class="submit">
-        <button onclick="history.go(-1);">뒤로가기</button>
+
+      <!-- Receipt container -->
+      <div class="receipt-container">
+        <p th:if="${#lists.isEmpty(receipt)}">주문 내역이 없습니다.</p>
+
+        <div th:each="order : ${receipt}" class="receipt-card">
+          <h3>주문 번호: <span th:text="${order.orderCode}"></span></h3>
+          <p><strong>주문 항목:</strong> <br> <span th:utext="${order.orderList}"></span></p>
+          <p><strong>주문 시간:</strong> <span th:text="${order.orderTime}"></span></p>
+          <p><strong>총 금액:</strong> <span th:text="${order.orderPrice}"></span> 원</p>
+          <p><strong>지점:</strong> <span th:text="${order.storeId}"></span></p>
+        </div>
+        <hr>
+        <!-- Back button -->
+        <div class="submit">
+          <button onclick="history.go(-1);">뒤로가기</button>
+        </div>
       </div>
     </div>
-
-
-
   </div>
 </body>
 

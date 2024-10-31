@@ -3,39 +3,38 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>CUSTOMER MAIN</title>
+  <title>BURGERZIP CUSTOMER MAIN</title>
   <link rel="stylesheet" th:href="@{/css/style_customer.css}">
 </head>
 
 <body>
-  <div id="wrap_main">
-    <img
-      src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F64Fyi%2FbtsKopBV7f8%2FV9c159yoKN4R6s0C6HV2i0%2Fimg.png"
-      width="100" />
+  <div id="wrap_customer_main">
     <div id="area">
       <div id="header">
-        <h1>CUSTOMER MAIN</h1>
-        <h2>버거집입니다🍔</h2>
-        <p>안녕하세요, 고객님!</p>
-        <p>여기서 주문 및 개인정보 관리를 </p>
-        <p>하실 수 있습니다.</p>
+        <img
+          src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F64Fyi%2FbtsKopBV7f8%2FV9c159yoKN4R6s0C6HV2i0%2Fimg.png"
+          width="100" />
+        <br>
+        <h3>버거집 CUSTOMER MAIN🍔</h3>
+        <p>안녕하세요 고객님,</p>
+        <p>여기서 주문 및 개인정보 관리를 하실 수 있습니다.</p><br>
       </div>
-
-      <div class="menu" style="align-items: center;">
-        <nav class="nav">
-          <a class="nav-link" href="/main/customer/stores">[1] 주문하기</a>
-          <a class="nav-link" href="/main/customer/receipt">[2] 주문내역 확인</a>
-          <a class="nav-link" href="/main/customer/myPage">[3] 마이페이지</a>
-          <a class="nav-link" href="/main">[4] 로그아웃</a>
-        </nav>
-      </div>
-
-      <div class="message-box">
-        <p th:text="${message}" class="message success">CUSTOMER 로그인 성공!</p> <!-- 로그인 성공 메시지 -->
-        <p th:text="${error}" class="message error">아이디 또는 비밀번호를 확인해주세요.</p> <!-- 로그인 실패 메시지 -->
-      </div>
+      <span class="submit"><input type="button" value="주문하기"
+          onclick="window.location.href='/main/customer/stores';" /></span>
+      <span class="submit"><input type="button" value="주문내역 확인"
+          onclick="window.location.href='/main/customer/receipt';" /></span>
+      <span class="submit"><input type="button" value="마이페이지"
+          onclick="window.location.href='/main/customer/myPage';" /></span>
+      <span class="submit"><input type="submit" value="로그아웃" onclick="window.location.href='/main';" /></span>
     </div>
   </div>
+
+
+  <div>
+    <p th:text="${message}">CUSTOMER 로그인 성공!</p> <!-- 로그인 성공 메시지 -->
+    <p th:text="${error}">아이디 또는 비밀번호를 확인해주세요.</p> <!-- 로그인 실패 메시지 -->
+  </div>
+
 </body>
 
 </html>

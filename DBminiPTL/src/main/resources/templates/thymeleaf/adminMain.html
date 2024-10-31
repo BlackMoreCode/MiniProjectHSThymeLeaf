@@ -1,29 +1,40 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>ADMIN MAIN</title>
+  <meta charset="UTF-8">
+  <title>BURGERZIP ADMIN MAIN</title>
+  <link rel="stylesheet" th:href="@{/css/style_admin.css}">
 </head>
+
 <body>
-  <div class="container"></div>
-    <h1>ADMIN MAIN</h1>
-  <div>
-    <h2>버거집입니다🍔</h2>
-    <p>안녕하세요, 관리자님!</p>
-    <p>여기서 매장 관리 및 발주를 할 수 있습니다.</p>
+  <div id="wrap_admin_main">
+    <div id="area_admin_main">
+      <div id="header">
+        <img
+          src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F64Fyi%2FbtsKopBV7f8%2FV9c159yoKN4R6s0C6HV2i0%2Fimg.png"
+          width="100" />
+        <br>
+        <h3>버거집 ADMIN MAIN🍔</h3>
+        <p>안녕하세요 관리자님,</p>
+        <p>여기서 매장 관리 및 발주를 할 수 있습니다.</p><br>
+      </div>
+      <span class="submit"><input type="button" value="발주하기"
+          onclick="window.location.href='/main/admin/storeStat';" /></span>
+      <span class="submit"><input type="button" value="매출 현황"
+          onclick="window.location.href='/main/admin/sales';" /></span>
+      <span class="submit"><input type="button" value="매장 계좌 관리"
+          onclick="window.location.href='/main/admin/account';" /></span>
+      <span class="submit"><input type="submit" value="로그아웃" onclick="window.location.href='/main';" /></span><br><br>
+    </div>
   </div>
 
-  <nav class="nav">
-    <a class="nav-link" href="/main/admin/storeStat">[1]발주하기</a>
-    <a class="nav-link" href="/main/admin/sales">[2]매출 현황</a>
-    <a class="nav-link" href="/main/admin/account">[3]매장 계좌 관리</a>
-    <a class="nav-link" href="/main">[5]로그아웃</a>
-  </nav>
 
   <div>
     <p th:text="${message}">ADMIN 로그인 성공!</p> <!-- 로그인 성공 메시지 -->
-    <p th:text="${error}">아이디 또는 비밀번호를 확인해주세요.</p>   <!-- 로그인 실패 메시지 -->
+    <p th:text="${error}">아이디 또는 비밀번호를 확인해주세요.</p> <!-- 로그인 실패 메시지 -->
   </div>
 
 </body>
+
 </html>

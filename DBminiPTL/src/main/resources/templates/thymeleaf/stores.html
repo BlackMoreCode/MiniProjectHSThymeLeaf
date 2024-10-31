@@ -1,26 +1,40 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="UTF-8">
-  <title>가게 선택</title>
-  <link rel="stylesheet" href="/css/style_customer.css">
+  <title>BURGERZIP CUSTOMER ORDER</title>
+  <link rel="stylesheet" th:href="@{/css/style_customer.css}">
 </head>
 
 <body>
-  <div id="wrap_main">
-    <h1>가게 선택</h1>
 
-    <form th:action="@{/main/customer/stores}" method="post">
-      <div class="store-buttons">
-        <span th:each="store : ${stores}">
-          <button type="submit" name="storeId" th:value="${store}" class="store-button">
-            <span th:text="${store}"></span>
-          </button>
-        </span>
+  <div id="wrap_customer_order_stores">
+    <div id="area_customer_order_stores">
+      <div id="header">
+        <img
+          src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F64Fyi%2FbtsKopBV7f8%2FV9c159yoKN4R6s0C6HV2i0%2Fimg.png"
+          width="100" />
+        <br>
+        <h3>버거집 CUSTOMER ORDER🍔</h3>
+        <p>안녕하세요 고객님,</p>
+        <p>제품 주문 페이지입니다.</p><br>
       </div>
-    </form>
+      <br><br><br>
+
+      <h2>주문 지점 선택🚩</h2><br>
+
+      <form th:action="@{/main/customer/stores}" method="post">
+        <span class="submit" th:each="store : ${stores}">
+          <input type="submit" name="storeId" th:value="${store}">
+        </span>
+      </form><br><br><br>
+
+    </div>
   </div>
+
+
+
 </body>
 
 </html>

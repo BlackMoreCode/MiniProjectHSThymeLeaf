@@ -24,20 +24,20 @@
     <p>안녕하세요, 고객님!</p>
     <p>버거집 회원 정보 수정을 위한 페이지입니다.</p>
   </div>
-<h1>회원 정보 갱신 결과</h1>
+  <h1>회원 정보 갱신 결과</h1>
 
-    <!-- Success Message -->
-    <div th:if="${isSuccess}" class="success">
-        회원정보 수정 성공
-    </div>
+  <!-- Success Message -->
+  <div th:if="${isSuccess}" class="success">
+    회원정보 수정 성공
+  </div>
 
-    <!-- Failure Message -->
-    <div th:if="${isSuccess == false}" class="failure">
-        회원정보 수정 실패: <span th:text="${error}"></span>
-    </div>
+  <!-- Failure Message -->
+  <div th:if="${isSuccess == false}" class="failure">
+    회원정보 수정 실패: <span th:text="${error}"></span>
+  </div>
 
-    <a href="/customer/myPage">마이페이지로 돌아가기</a>
-    <input type="button" value="재작성 하기" onclick="history.go(-1);" />
+  <a href="/customer/myPage">마이페이지로 돌아가기</a>
+  <input type="button" value="재작성 하기" onclick="history.go(-1);" />
 </body>
 
 </html>

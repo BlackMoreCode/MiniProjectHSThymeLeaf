@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="UTF-8">
-  <title>회원정보 삭제 결과</title>
+  <title>BURGERZIP CUSTOMER ACCOUNT DELETE</title>
+  <link rel="stylesheet" th:href="@{/css/style_customer.css}">
   <style>
     .success {
       color: green;
@@ -18,22 +19,35 @@
 </head>
 
 <body>
-  <h1>회원 정보 삭제 결과</h1>
+  <div id="wrap_customer_mypage">
+    <div id="area">
+      <div id="header">
+        <img
+          src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F64Fyi%2FbtsKopBV7f8%2FV9c159yoKN4R6s0C6HV2i0%2Fimg.png"
+          width="100" />
+        <br>
+        <h3>버거집 CUSTOMER 회원 계정 삭제 결과🍔</h3>
+        <p>안녕하세요 고객님,</p>
+        <p>여기는 회원 계정 삭제 결과 페이지입니다.</p><br>
+      </div>
 
-  <!-- Success Message -->
-  <div th:if="${isSuccess}" class="success">
-    <p>회원 삭제 성공</p>
-    <a href="/main">Return to Main</a>
-  </div>
+      <br><br><br><br><br><br>
 
-  <!-- Failure Message -->
-  <div th:if="${!isSuccess}" class="failure">
-    <p>회원 삭제 실패</p>
-    <p th:text="${errorMessage}"></p> <!-- Display the specific error message -->
-    <a href="/main">Return to Main</a>
-  </div>
+      <!-- Success Message -->
+      <div th:if="${isSuccess}" class="success">
+        <p>회원 삭제 성공</p>
+        <a href="/main">Return to Main</a>
+      </div>
 
-  <input type="button" value="재작성 하기" onclick="history.go(-1);" />
+      <!-- Failure Message -->
+      <div th:if="${!isSuccess}" class="failure">
+        <p>회원 삭제 실패</p>
+        <p th:text="${errorMessage}"></p> <!-- Display the specific error message -->
+        <a href="/main">Return to Main</a>
+      </div>
+
+      <a href="/main/customer/myPage">마이페이지로 돌아가기</a>
+      <input type="button" value="재작성 하기" onclick="history.go(-1);" />
 </body>
 
 </html>

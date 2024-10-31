@@ -1,31 +1,61 @@
 <!DOCTYPE html>
-
-<html xmlns:th="http:/www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>회원 정보 갱신</title>
-  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <title>BURGERZIP CUSTOMER INFO UPDATE</title>
+  <link rel="stylesheet" th:href="@{/css/style_customer.css}">
 </head>
 
+
 <body>
-  <h1>회원 정보 갱신</h1>
-  <div>
-  </div>
-  <form action="/customer/myPage/accInfoUpdate" method="post">
-    <input type="hidden" id="userId" name="userId" th:value="${accInfoVO.userId}">
+  <div id="wrap_customer_mypage">
+    <div id="area">
+      <div id="header">
+        <img
+          src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F64Fyi%2FbtsKopBV7f8%2FV9c159yoKN4R6s0C6HV2i0%2Fimg.png"
+          width="100" />
+        <br>
+        <h3>버거집 CUSTOMER 회원정보 수정🍔</h3>
+        <p>안녕하세요 고객님,</p>
+        <p>여기서 회원정보를 수정하실 수 있습니다.</p><br>
+      </div>
 
-    <label for="userPw">새로운 비밀번호 (8-20 characters):</label>
-    <p>※ 비밀번호는 8자 이상 20자 이하로, 영문자, 숫자, 특수기호의 조합이어야 합니다. '&'는 사용할 수 없습니다.</p>
-    <input type="password" id="userPw" name="userPw"><br>
+      <div id="input_box_infoup">
+        <form action="/main/customer/myPage/accInfoUpdate}" method="post">
+          <input class="input" type="hidden" id="userId" name="userId" th:value="${accInfoVO.userId}">
 
-    <label for="userPhone">New Phone Number:</label>
-    <input type="text" id="userPhone" name="userPhone"><br>
+          <input class="input" type="password" id="userPw" name="userPw" placeholder="새로운 비밀번호를 입력하세요." required
+            minlength="8" maxlength="20" /><br>
+          <div class="description">
+            ※ 비밀번호는 8자 이상 20자 이하의 길이입니다.<br>
+            ※ 영문자, 숫자, 특수기호의 조합이어야 합니다.<br>
+            ※ '&'는 사용할 수 없습니다.
+          </div><br>
 
-    <button type="submit">Update</button>
-    <a href="/main/customer/myPage">취소</a>
-  </form>
+          <input class="input" type="text" id="userPhone" name="userPhone" placeholder="새로운 전화번호를 입력하세요."
+            pattern="\d{3}-\d{4}-\d{4}"><br>
+          <div class="description">
+            ※ 전화번호는 '010-1234-5678' 형식으로 입력해주세요.
+          </div>
+          <br><br>
+          <span class="submit1"><input type="submit" value="회원정보 수정" /></span>
+
+
+        </form>
+
+        <ul id="sub_menu"><br>
+          <li><a href="/main/customer/myPage">뒤로가기</a></li>
+        </ul><br><br><br>
+
+      </div>
+
+
+
+
+
+
+      </form>
 </body>
 
 </html>

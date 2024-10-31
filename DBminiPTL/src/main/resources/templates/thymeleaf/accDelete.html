@@ -1,23 +1,35 @@
 <!DOCTYPE html>
-
-<html xmlns:th="http:/www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>회원 삭제</title>
-  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <title>BURGERZIP CUSTOMER ACCOUNT DELETE</title>
+  <link rel="stylesheet" th:href="@{/css/style_customer.css}">
 </head>
 
-<body>
-  <h1>회원 삭제</h1>
-  <form action="/main/customer/myPage/accInfoDelete" method="post">
-    <p>정말로 계정을 삭제하시겠습니까? 이는 되돌릴 수 없습니다.</p>
-    <input type="hidden" name="userId" th:value="${accInfoVO.userId}" />
-    <input type="submit" value="계정 삭제" />
-  </form>
 
-  <button onclick="location.href='/main'">취소</button>
+<body>
+  <div id="wrap_customer_mypage">
+    <div id="area">
+      <div id="header">
+        <img
+          src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F64Fyi%2FbtsKopBV7f8%2FV9c159yoKN4R6s0C6HV2i0%2Fimg.png"
+          width="100" />
+        <br>
+        <h3>버거집 CUSTOMER 회원 계정 삭제🍔</h3>
+        <p>안녕하세요 고객님,</p>
+        <p>여기서 회원님의 계정을 삭제하실 수 있습니다.</p><br>
+      </div>
+
+      <br><br><br><br><br><br>
+
+      <form action="/main/customer/myPage/accInfoDelete" method="post">
+        <p>정말로 계정을 삭제하시겠습니까? 이는 되돌릴 수 없습니다.</p>
+        <input type="hidden" name="userId" th:value="${accInfoVO.userId}" />
+        <input type="submit" value="계정 삭제" />
+      </form>
+
+      <button onclick="location.href='/main'">취소</button>
 </body>
 
 </html>
