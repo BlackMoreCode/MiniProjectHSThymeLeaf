@@ -38,20 +38,18 @@ public class StoreOrderController {
 
 
         int capital = invDAO.capitalCheck(Session.storeId);
+        String capitalStr = invDAO.formatAmount(capital);
         int sales = invDAO.salesCheck(Session.storeId);
         String salesStr = invDAO.formatAmount(sales);
         int totalPrice = invDAO.getTotalPriceStore();
-
-        for (SingleMenu e : cart) {
-            System.out.println(e.getName() + " : " + e.getPrice());
-        }
+        String totalPriceStr = invDAO.formatAmount(totalPrice);
 
         model.addAttribute("selectedStore", Session.storeId);
         model.addAttribute("stockList", stockCheck);
         model.addAttribute("cart", cart);
-        model.addAttribute("capital", capital);
+        model.addAttribute("capital", capitalStr);
         model.addAttribute("sales", salesStr);
-        model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("totalPrice", totalPriceStr);
 
         model.addAttribute("products", products);
 
