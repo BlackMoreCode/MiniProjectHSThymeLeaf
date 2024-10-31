@@ -128,11 +128,6 @@
                   <input type="hidden" th:value="${menu.menuName}" name="menuName" />
                   <input type="hidden" th:value="${menu.price}" name="menuPrice" />
                   <input type="number" name="count" value="1" min="1" th:max="${menu.stock}" required />
-              </td>
-              <td>
-                <form th:action="@{/main/customer/cart/single}" method="post">
-                  <input type="hidden" th:value="${menu.menuName}" name="menuName" />
-                  <input type="hidden" th:value="${menu.price}" name="menuPrice" />
                   <span class="sub_button3"><input type="submit" value="장바구니에 담기"></span>
 
                 </form>
@@ -174,11 +169,6 @@
                   <input type="hidden" th:value="${menu.menuName}" name="menuName" />
                   <input type="hidden" th:value="${menu.price}" name="menuPrice" />
                   <input type="number" name="count" value="1" min="1" th:max="${menu.stock}" required />
-              </td>
-              <td>
-                <form th:action="@{/main/customer/cart/single}" method="post">
-                  <input type="hidden" th:value="${menu.menuName}" name="menuName" />
-                  <input type="hidden" th:value="${menu.price}" name="menuPrice" />
                   <span class="sub_button3"><input type="submit" value="장바구니에 담기"></span>
 
                 </form>
@@ -220,11 +210,6 @@
                   <input type="hidden" th:value="${menu.menuName}" name="menuName" />
                   <input type="hidden" th:value="${menu.price}" name="menuPrice" />
                   <input type="number" name="count" value="1" min="1" th:max="${menu.stock}" required />
-              </td>
-              <td>
-                <form th:action="@{/main/customer/cart/single}" method="post">
-                  <input type="hidden" th:value="${menu.menuName}" name="menuName" />
-                  <input type="hidden" th:value="${menu.price}" name="menuPrice" />
                   <span class="sub_button3"><input type="submit" value="장바구니에 담기"></span>
 
                 </form>
@@ -494,11 +479,12 @@
           <br><br>
           <h3>총 합계: <span th:text="${totalPrice}" name="totalPrice">0</span> 원</h3>
 
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <form th:action="@{/main/customer/checkout}" method="post" onsubmit="showAlert()">
-              <button type="submit">결제하기</button>
-            </form>
-
+          <div>
+            <span class="submit_order">
+              <form th:action="@{/main/customer/checkout}" method="post" onsubmit="showAlert()">
+                <button type="submit">결제하기</button>
+              </form>
+            </span>
             <!-- 재고 부족 메시지 표시 -->
             <div th:if="${stockCheckMsg}" style="color: red; margin-left: 10px;">
               <p th:text="${stockCheckMsg}"></p>
